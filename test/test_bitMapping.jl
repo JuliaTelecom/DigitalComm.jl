@@ -7,7 +7,7 @@ using Test
 # --- Tests 
 # ---------------------------------------------------- 
 # Note --> The mapping system is described in bitMapping.jl
-
+println("Tests for symbol mapper with QAM sequences");
 
 @testset  "qpsk" begin 
 	# Create a bit squence (already tested) 

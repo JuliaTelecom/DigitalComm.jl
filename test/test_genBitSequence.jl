@@ -6,7 +6,7 @@ using Test
 # ---------------------------------------------------- 
 # --- Tests 
 # ---------------------------------------------------- 
-
+println("Tests for binary sequence generation");
 
 @testset "genBitSequence" begin 
 	# --- Check type and so on
