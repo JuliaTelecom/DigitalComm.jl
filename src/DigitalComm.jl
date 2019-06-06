@@ -26,4 +26,8 @@ export genByteSequence! , genByteSequence;
 include("bitMapping.jl");
 export bitMappingQAM! , bitMappingQAM;
 
+# --- QAM Hard demapper 
+include("bitDeMapping.jl");
+export bitDemappingQAM! ,  bitDemappingQAM;
+
 end
