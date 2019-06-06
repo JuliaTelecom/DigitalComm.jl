@@ -18,7 +18,12 @@ module DigitalComm
 # --- Binary managment 
 include("genBitSequence.jl");
 # Export 
-export genBitSequence!, genBitSequence;
-export genByteSequence!, genByteSequence;
+export genBitSequence!  , genBitSequence;
+export genByteSequence! , genByteSequence;
+
+
+# --- QAM bit mapping 
+include("bitMapping.jl");
+export bitMappingQAM! , bitMappingQAM;
 
 end
