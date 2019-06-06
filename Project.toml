@@ -1,0 +1,4 @@
+name = "DigitalComm"
+uuid = "a7b11256-881b-11e9-3aff-ff4a76f1bfae"
+authors = ["Robin Gerzaguet <robin.gerzaguet@irisa.fr>"]
+version = "0.1.0"
