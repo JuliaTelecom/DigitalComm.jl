@@ -19,6 +19,6 @@ module DigitalComm
 include("genBitSequence.jl");
 # Export 
 export genBitSequence!, genBitSequence;
-
+export genByteSequence!, genByteSequence;
 
 end
