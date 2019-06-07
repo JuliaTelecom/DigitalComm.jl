@@ -178,6 +178,18 @@ end
 # --- Multiple dispatch handling
 # ----------------------------------------------------
 # --- MD: String case for modulation order
+function bitMappingQAM!(qamMat,M::String, bitSeq)
+	# --- Casting modulation order to int8
+	if M == "QPSK" || M == "4-QAM" || M == "QAM-4" || M=="4QAM" || M == "QAM4"
+		bitMappingQAM!(qamMat,,bitSeq);
+	elseif M == "16-QAM" || M == "QAM-16" || M=="16QAM" || M == "QAM16"
+		bitMappingQAM!(qamMat,16,bitSeq);
+	elseif M == "64-QAM" || M == "QAM-64" || M=="64QAM" || M == "QAM64"
+		bitMappingQAM!(qamMat,64,bitSeq);
+	elseif M == "256-QAM" || M == "QAM-256" || M=="256QAM" || M == "QAM256"
+		bitMappingQAM!(qamMat,256,bitSeq);
+	end
+end
 function bitMappingQAM(M::String, bitSeq)
 	# --- Casting modulation order to int8
 	if M == "QPSK" || M == "4-QAM" || M == "QAM-4" || M=="4QAM" || M == "QAM4"
