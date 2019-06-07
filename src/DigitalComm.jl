@@ -29,5 +29,8 @@ export bitMappingQAM! , bitMappingQAM;
 # --- QAM Hard demapper 
 include("bitDeMapping.jl");
 export bitDemappingQAM! ,  bitDemappingQAM;
+include("hardConstellation.jl");
+export hardConstellation! , hardConstellation;
+
 
 end
