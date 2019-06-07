@@ -33,11 +33,12 @@ function genBitSequence!(buffer::Array{UInt8},nbBits,randSeed=-1)
 		Random.seed!(randSeed);
 	end
 	# --- Generating binary sequence
-	buffer .= Int8.(rand([0,1],Int(nbBits)));
+	#buffer .= Int8.(rand([0,1],Int(nbBits)));
+	Random.rand!(buffer,[0,1]);
 	# --- Switch to "pure" random system
-	RandomDevice();
-	# --- Export buffer 
-	return buffer;
+	if randSeed != -1
+		RandomDevice();
+	end
 end
 
 """ genBitsequence
@@ -56,6 +57,11 @@ If stated, randSeed controls the seed of the random generator
 # v 1.0 - Robin Gerzaguet.
 """
 function genBitSequence(nbBits,randSeed=-1)
+	# --- Setting the random seed if given
+	if randSeed != -1
+		# --- Seed as the second parameter
+		Random.seed!(randSeed);
+	end
 	# --- Create the input buffer 
 	buffer	= zeros(UInt8,nbBits);
 	# --- Call the bang method 
@@ -89,9 +95,12 @@ function genByteSequence!(buffer::Array{UInt8},nbBytes,randSeed=-1)
 		Random.seed!(randSeed);
 	end
 	# --- Generating byte sequence
-	buffer  .= rand(0x00:0x01:0xff,Int(nbBytes));
+	Random.rand!(buffer, 0x00:0x01:0xff);
 	# --- Switch to "pure" random system
 	RandomDevice();
+	if randSeed != -1
+		RandomDevice();
+	end
 	# --- Export buffer 
 	return buffer;
 end
