@@ -32,6 +32,11 @@ export bitDemappingQAM! ,  bitDemappingQAM;
 include("hardConstellation.jl");
 export hardConstellation! , hardConstellation;
 
+# --- QAM soft demapper 
+include("symbolDemapper.jl");
+export symbolDemappingQAM! , symbolDemappingQAM; 
+export llrToHardBits! , llrToHardBits; 
+export llrToUInt! , llrToUInt; 
 
 # --- AWGN channel model 
 include("addNoise.jl");

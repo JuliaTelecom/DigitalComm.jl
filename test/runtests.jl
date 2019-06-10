@@ -15,5 +15,9 @@ include("test_bitMapping.jl");
 include("test_bitDemapping.jl");
 include("test_hardConstellation.jl");
 
+# Symbol demapper 
+include("test_symbolDemapper.jl");
+
+
 # AWGN 
 include("test_addNoise.jl");
