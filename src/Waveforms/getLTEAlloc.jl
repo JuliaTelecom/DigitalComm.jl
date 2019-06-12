@@ -1,6 +1,3 @@
-
-
-
 """ getLTEAlloc
 ---  
 Returns the vector of allocated subcarriers associated to Long Term evolution frequency mapping.
