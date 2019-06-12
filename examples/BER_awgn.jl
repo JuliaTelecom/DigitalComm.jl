@@ -55,6 +55,8 @@ function main()
 	# --- Init vector
 	nbSNR			= length(snrVect);
 	ber				= zeros(Float64,length(qamVect),nbSNR);
+	qamSeq			= zeros(Complex{Float64},nbSymb);
+	qamNoise		= zeros(Complex{Float64},nbSymb);
 	# --- MC run
 	for iN = 1 : 1 : length(qamVect)
 		# ---  Setting MCS
@@ -67,8 +69,6 @@ function main()
 		nbBits		= nbSymb *n;
 		# --- Init MC buffers 
 		bitSeq	    = zeros(UInt8,nbBits);
-		qamSeq	    = zeros(Complex{Float64},nbBits÷n);
-		qamNoise	= zeros(Complex{Float64},nbBits÷n);
 		bitDec	    = zeros(UInt8,nbBits);
 		# ----------------------------------------------------
 		# --- Iterative BER measure

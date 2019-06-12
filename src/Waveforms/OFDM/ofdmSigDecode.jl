@@ -43,7 +43,7 @@ allocSubcarriers : Vector of index of allocated subcarriers [Array{Int,nbSubcarr
 """
 function ofdmSigDecode!(qamRx,sigChan,nFFT,nCP,allocSubcarriers)
 	# Set 4 core for FFT computation
-	FFTW.set_num_threads(4)
+	#FFTW.set_num_threads(4)
 	currSymb  = zeros(Complex{Float64},nFFT);
 	# --- OFDM demodulator
 	for n = 1  : 1 : size(qamRx,2)

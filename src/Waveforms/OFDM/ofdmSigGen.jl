@@ -57,7 +57,8 @@ The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 function ofdmSigGen(qamMat,nFFT,nCP,allocatedSubcarriers)
 	nbSymb = size(qamMat,2);
 	sigId  = zeros(Complex{Float64},(nFFT+nCP)*nbSymb);
-	return ofdmSigGen!(sigId,nFFT,nCP,allocatedSubcarriers);
+	ofdmSigGen!(sigId,qamMat,nFFT,nCP,allocatedSubcarriers);
+	return sigId;
 end 
 
 
@@ -81,7 +82,7 @@ The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 """
 function ofdmSigGen!(sigId,qamMat,nFFT,nCP,allocatedSubcarriers)
 	# Set 4 core for FFT computation
-	FFTW.set_num_threads(4)
+	#FFTW.set_num_threads(4)
 	# --- Getting parameters
 	nbSymb		= size(qamMat,2); 		# --- Applied on x symbols
 	symbSize	= nFFT + nCP; 			# --- Symbol size

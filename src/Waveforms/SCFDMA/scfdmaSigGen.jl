@@ -61,7 +61,7 @@ The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 """
 function scfdmaSigGen(qamMat,nFFT,nCP,allocatedSubcarriers,sizeDFT)
 	# Set 4 core for FFT computation
-	FFTW.set_num_threads(4)
+	#FFTW.set_num_threads(4)
 	# --- Getting parameters
 	nbSymb		= size(qamMat,2); 		# --- Applied on x symbols
 	symbSize	= nFFT + nCP; 			# --- Symbol size
