@@ -20,7 +20,7 @@ qamRx	= scfdmaSigDecode(sigId,nFFT,nCP,allocSubcarriers,sizeDFT);
 """
 function scfdmaSigDecode(sigChan,nFFT,nCP,allocSubcarriers,sizeDFT,doPostProcessing=1)
 	# Set 4 core for FFT computation
-	FFTW.set_num_threads(4)
+	#FFTW.set_num_threads(4)
 	# --- Getting symbol size
 	sizeSymb	   = nFFT + nCP;
 	# --- Getting number of symbol to decode
@@ -90,5 +90,5 @@ qamRx	= scfdmaSigDecode(sigId,nFFT,nCP,allocSubcarriers,sizeDFT);
 # v 1.0 - Robin Gerzaguet.
 """
 function scfdmaSigDecode(sigChan,scfdma::StrucSCFDMA,doPostProcessing=1)
-	return scfdmaSigDecode(sigChan,scfdma.nFFT,scfdma.nCP,scfdma.allocatedSubcarriers,sizeDFT,doPostProcessing);
+	return scfdmaSigDecode(sigChan,scfdma.nFFT,scfdma.nCP,scfdma.allocatedSubcarriers,scfdma.sizeDFT,doPostProcessing);
 end
