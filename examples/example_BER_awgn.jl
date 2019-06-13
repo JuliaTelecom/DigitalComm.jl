@@ -1,4 +1,4 @@
-module BER_awgn 
+module example_BER_awgn 
 
 # ---------------------------------------------------- 
 # --- Modules  
