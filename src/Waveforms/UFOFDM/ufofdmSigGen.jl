@@ -153,7 +153,7 @@ function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,att
 	        # --- IFFT
 	        sigIFFT				  = ifft(sigToFFT,1);
 	        # --- Apply filter on RB
-	        filteredSignal[iB1,:] = conv(sigIFFT,filterMat[iB1,:]);
+	        filteredSignal[iB1,:] = convT(sigIFFT,filterMat[iB1,:]);
 	    end
 	    # --- Output UFOFDM symbol
 	    sigId[:,iB]	  = sum(filteredSignal,dims=1);
@@ -162,6 +162,33 @@ function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,att
 	return sigId;
 end
 # --- MD is waveform structure is given
+
+""" convT
+---  
+Perform time domain naive convolution. For UF-OFDM, size of filter is small so doing it in frequency domain is not appropriate
+# --- Syntax 
+ c = convT(a,b);
+# --- Input parameters 
+- a	  : First signal 
+- b	  : Second signal 
+# --- Output parameters 
+- c	  : a * b 
+# --- 
+# v 1.0 - Robin Gerzaguet.
+"""
+function convT(a::Array{T},b::Array{T}) where T
+	# --- Output container 
+	c = zeros(T,length(a)+length(b)-1);
+	# --- Double foor loop
+	@inbounds for j=1: length(a)
+		for k=1: length(b)
+            c[j+k-1] += a[j]*b[k]
+        end
+    end
+    return c;
+end
+
+
 
 
 """ ufofdmSigGen
