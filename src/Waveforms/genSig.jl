@@ -77,17 +77,17 @@ Returns the waveform name based on input type structure
 # v 1.0 - Robin Gerzaguet.
 """
 function getWaveformName(s::Waveform)
-	if typeof(s) == RGWaveforms.StrucOFDM
+	if typeof(s) == StrucOFDM
 		name = "OFDM";
-	elseif typeof(s) == RGWaveforms.StrucSCFDMA
+	elseif typeof(s) == StrucSCFDMA
 		name = "SCFDMA";
-	elseif typeof(s) == RGWaveforms.StrucUFOFDM
+	elseif typeof(s) == StrucUFOFDM
 		name = "UFOFDM";
-	elseif typeof(s) == RGWaveforms.StrucWOLA
+	elseif typeof(s) == StrucWOLA
 		name = "WOLA";
-	elseif typeof(s) == RGWaveforms.StrucFBMC 
+	elseif typeof(s) == StrucFBMC 
 		name = "FBMC";
-	elseif typeof(s) == RGWaveforms.StrucBFOFDM 
+	elseif typeof(s) == StrucBFOFDM 
 		name = "BFOFDM";
 	end
 end
