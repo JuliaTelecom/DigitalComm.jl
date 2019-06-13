@@ -28,7 +28,7 @@ struct StrucBFOFDM<: Waveform
 	GI::Int;
 	δ::Float64;
 	allocatedSubcarriers::Array{Int};
-	#filterName::String;
+	filterName::String;
 	filterTaps::Array{Float64};
 	BT::Float64;
 	filterStopBand::Float64;
