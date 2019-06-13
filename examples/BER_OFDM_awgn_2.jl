@@ -92,7 +92,6 @@ function main()
 				# Forcing seed
 				bitSeq	= genBitSequence(nbBits);
 				# --- QPSK mapping
-				@bp
 				qamSeq	= bitMappingQAM(mcs,bitSeq);
 				# --- Moove to T/F matrix 
 				qamSeq	= reshape(qamSeq,nbSubcarriers,nbSymb);
