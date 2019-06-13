@@ -84,7 +84,7 @@ function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,att
 	# ----------------------------------------------------
 	if isempty(filterTaps)
 		# No filter is given, so create one based on input parameters 
-		filterTaps .= dolphChebyshev(L,attenuation);
+		filterTaps = dolphChebyshev(L,attenuation);
 	end
 	# ----------------------------------------------------
 	# --- UF-OFDM parameters
@@ -116,7 +116,7 @@ function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,att
 		# --- Switch to time domain
 		sigToFFT			  = ifft(sigToFFT);
 		# --- Getting frequency shift filter
-		filterMat[iB1,:]      = filterUFOFDM .* (exp.(2*1im*pi*spectrumLoc*collect(0:L-1)/nFFT));
+		filterMat[iB1,:]      = filterTaps .* (exp.(2*1im*pi*spectrumLoc*collect(0:L-1)/nFFT));
 		# --- Apply filter on RB
 		sF					  = sF .+ conv(sigToFFT,filterMat[iB1,:]);
 	end
