@@ -9,6 +9,7 @@ Structure for UFOFDM
 - applyPD	: Apply Pre-distortion at Tx stage (default 1, 0 : not applied) [Int=0 or 1] 
 - attenuation : dolphChebyshev filter attenation 
 - filterTaps  : Filter impulse response coefficient [Array{Float64}]
+- pd		  : PD coefficients [Array{Complex{Float64}}]
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """
@@ -20,6 +21,7 @@ struct StrucUFOFDM<: Waveform
 	applyPD::Int;
 	attenuation::Float64;
 	cir::Array{Float64};
+	pd::Array{Complex{Float64}};
 end
 
 """ initUFOFDM
@@ -47,8 +49,10 @@ function initUFOFDM(nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,attenuation=
 	end
 	# --- Create the filter response 
 	filterTaps = dolphChebyshev(L,attenuation);
+	# --- Calculate PD coefficients 
+	pdCoeffs	= calcPDCoefficients(filterTaps,nFFT,sizeRB,allocatedSubcarriers,applyPD);
 	# --- Create the OFDM structure
-	return StrucUFOFDM(nFFT,L,allocatedSubcarriers,sizeRB,applyPD,attenuation,filterTaps);
+	return StrucUFOFDM(nFFT,L,allocatedSubcarriers,sizeRB,applyPD,attenuation,filterTaps,pdCoeffs);
 end
 
 
@@ -69,6 +73,8 @@ sigId	= genereSignalufofdm(qamMat,nFFT,nCp,allocatedSubcarriers;sizeRB=12,applyP
 - sizeRB  : Carrier size in subcarriers (default : LTE RB size: 12) [Int]
 - applyPD : Filter shape compensation (enabled by default) [Int]
 - attenuation : DC filter attenation in dB (default: 90) [Float64]
+- filterTaps : Filter coefficient (default empty and recreated)
+- pdCoeffs	  : Predistortion  Filter coefficient (default empty and recreated)
 # ---  Output parameters
 - sigId	  : ufofdm signal in time domain [Array{Complex{Float64},nbEch}]
 	* nbEch	: Number of samples: nbSymb*(nFFT+L-1)
@@ -78,7 +84,7 @@ sigId	= genereSignalufofdm(qamMat,nFFT,nCp,allocatedSubcarriers;sizeRB=12,applyP
 # ---
 # v 1.0 - Robin Gerzaguet.
 """
-function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,attenuation=40,filterTaps=Array{Float64}(undef,0))
+function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,attenuation=40,filterTaps=Array{Float64}(undef,0),pdCoeffs=Array{Float64}(undef,0))
 	# ----------------------------------------------------
 	# --- Getting filter info
 	# ----------------------------------------------------
@@ -98,62 +104,41 @@ function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,att
 	# ----------------------------------------------------
 	# --- Initiatiaisation of filter parameters
 	# ----------------------------------------------------
-	# Purpose is to defined each filter translated at the appropriate carrier frequency (center of carrier group)
-	# Init variables
-	sF			  = 0;
-	carrierRB	  = zeros(Int,nbRB,sizeRB);		# Matrix of carriers (carrier on line, subcarrier on column)
-	filterMat	  = zeros(Complex{Float64},nbRB,L);		# Matrix of frequency translated filterStopBand
-	# --- Iterative spectrum generation
-	for iB1 = 1 : 1 : nbRB
-		# --- Getting current RB
-		carrierRB[iB1,:]	  = allocatedSubcarriers[1+(iB1-1)*sizeRB:iB1*sizeRB];
-		# --- Finding carrier centering
-		spectrumLoc			  = carrierRB[iB1,1] + (carrierRB[iB1,end]-carrierRB[iB1,1])/2;
-		# --- Setting ones to appropriate spectral location
-		# Setting 1 on the carrier to get the amplitude reduction for PD stage
-		sigToFFT			  = zeros(Complex{Float64},nFFT);
-		sigToFFT[carrierRB[iB1,:]]	  = ones(Complex{Float64},sizeRB);
-		# --- Switch to time domain
-		sigToFFT			  = ifft(sigToFFT);
-		# --- Getting frequency shift filter
-		filterMat[iB1,:]      = filterTaps .* (exp.(2*1im*pi*spectrumLoc*collect(0:L-1)/nFFT));
-		# --- Apply filter on RB
-		sF					  = sF .+ conv(sigToFFT,filterMat[iB1,:]);
-	end
-	# --- Pre-distortion stage
-	if applyPD == 1
-		# --- Apply FFT on ZP data
-		sigFFT		  = fft([sF;zeros(Complex{Float64},nFFT-L+1)]);
-		# --- Channel estimation for current symbol
-		sigPD         = sigFFT[1:2:end];
-		# --- Deduce pre-distortion filter
-		chestPD		  = sigPD[allocatedSubcarriers];
-	else
-		# --- No predistortion filter
-		chestPD		  = ones(Int,nbDataSubcarrier);
+	if isempty(pdCoeffs) 
+		pdCoeffs = calcPDCoefficients(filterTaps,nFFT,sizeRB,allocatedSubcarriers,applyPD)
 	end
 	# ----------------------------------------------------
 	## --- Signal Generation
 	# ----------------------------------------------------
 	# --- Init Signal vector
 	sigId					= zeros(Complex{Float64},sizeSymb,nbSymb);
+	carrierRB		  = zeros(Int,nbRB,sizeRB); 
+	filterMat	  = zeros(Complex{Float64},nbRB,L);		# Matrix of frequency translated filterStopBand
 	# --- Iterative UFOFDM signal generation
 	for iB = 1 : 1 : nbSymb
 	    # --- Init sum operator
 		filteredSignal		  = zeros(Complex{Float64},nbRB,sizeSymb);
 		# --- Pre-disrtorition
-		matrixSeqPD			  = qamMat[:,iB] ./ chestPD;
+		matrixSeqPD			  = qamMat[:,iB] ./ pdCoeffs;
 	    # --- Filtering Ressource blocks
 	    for iB1 = 1 : 1: nbRB
+			if iB == 1 
+				# --- Init subcarrier in carrier matrix 
+				carrierRB[iB1,:]	  = allocatedSubcarriers[1+(iB1-1)*sizeRB:iB1*sizeRB];
+				# --- Spectrum location of given carrier 
+				spectrumLoc			  = carrierRB[iB1,1] + (carrierRB[iB1,end]-carrierRB[iB1,1])/2;
+				# --- Getting frequency shift filter
+				filterMat[iB1,:]      = filterTaps .* (exp.(2*1im*pi*spectrumLoc*(0:L-1)/nFFT));
+			end
 	        # --- Block Data to send
 	        dataBlock			  = matrixSeqPD[1+(iB1-1)*sizeRB:iB1*sizeRB];
 	        # --- Setting data to adequate RB
 			sigToFFT			  = zeros(Complex{Float64},nFFT);
-	        sigToFFT[carrierRB[iB1,:]]	  = dataBlock;
+			sigToFFT[carrierRB[iB,:]]	  = dataBlock;
 	        # --- IFFT
 	        sigIFFT				  = ifft(sigToFFT,1);
 	        # --- Apply filter on RB
-	        filteredSignal[iB1,:] = convT(sigIFFT,filterMat[iB1,:]);
+	        convT!(filteredSignal[iB1,:],sigIFFT,filterMat[iB1,:]);
 	    end
 	    # --- Output UFOFDM symbol
 	    sigId[:,iB]	  = sum(filteredSignal,dims=1);
@@ -187,7 +172,55 @@ function convT(a::Array{T},b::Array{T}) where T
     end
     return c;
 end
+function convT!(c::Array{T},a::Array{T},b::Array{T}) where T
+	# --- Double foor loop
+	@inbounds for j=1: length(a)
+		for k=1: length(b)
+            c[j+k-1] += a[j]*b[k]
+        end
+    end
+    return c;
+end
 
+function calcPDCoefficients(filterTaps,nFFT,sizeRB,allocatedSubcarriers,applyPD)
+# Purpose is to defined each filter translated at the appropriate carrier frequency (center of carrier group)
+	# Init variables
+	sF			  = 0;
+	nbRB		  = Int(floor(length(allocatedSubcarriers) / sizeRB));
+	L			  = length(filterTaps);
+	carrierRB	  = zeros(Int,nbRB,sizeRB);		# Matrix of carriers (carrier on line, subcarrier on column)
+	filterMat	  = zeros(Complex{Float64},nbRB,L);		# Matrix of frequency translated filterStopBand
+	# --- Iterative spectrum generation
+	for iB1 = 1 : 1 : nbRB
+		# --- Getting current RB
+		carrierRB[iB1,:]	  = allocatedSubcarriers[1+(iB1-1)*sizeRB:iB1*sizeRB];
+		# --- Finding carrier centering
+		spectrumLoc			  = carrierRB[iB1,1] + (carrierRB[iB1,end]-carrierRB[iB1,1])/2;
+		# --- Setting ones to appropriate spectral location
+		# Setting 1 on the carrier to get the amplitude reduction for PD stage
+		sigToFFT			  = zeros(Complex{Float64},nFFT);
+		sigToFFT[carrierRB[iB1,:]]	  = ones(Complex{Float64},sizeRB);
+		# --- Switch to time domain
+		ifft!(sigToFFT);
+		# --- Getting frequency shift filter
+		filterMat[iB1,:]      = filterTaps .* (exp.(2*1im*pi*spectrumLoc*(0:L-1)/nFFT));
+		# --- Apply filter on RB
+		sF					  = sF .+ convT(sigToFFT,filterMat[iB1,:]);
+	end
+	# --- Pre-distortion stage
+	if applyPD == 1
+		# --- Apply FFT on ZP data
+		sigFFT		  = fft([sF;zeros(Complex{Float64},nFFT-L+1)]);
+		# --- Channel estimation for current symbol
+		sigPD         = sigFFT[1:2:end];
+		# --- Deduce pre-distortion filter
+		chestPD		  = sigPD[allocatedSubcarriers];
+	else
+		# --- No predistortion filter
+		chestPD		  = ones(Int,nbDataSubcarrier);
+	end
+	return chestPD
+end
 
 
 
