@@ -226,6 +226,7 @@ export fbmcSigDecode
 # --- Global waveform alias
 include("./Waveforms/genSig.jl");
 export genSig
+export getWaveformName;
 export initWaveforms 
 export decodeSig
 
