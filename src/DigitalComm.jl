@@ -8,9 +8,10 @@ module DigitalComm
 # ---------------------------------------------------- 
 # --- Modules  
 # ---------------------------------------------------- 
-# Only submodules are considered so don't need to overload packages here 
+# Only submodules are considered so don't need to overload too much packages here 
 # --> Go to next section with submodules loading 
-using SpecialFunctions
+using FFTW 
+
 
 # ---------------------------------------------------- 
 # --- Submodules inclusion  
@@ -20,7 +21,6 @@ include("genBitSequence.jl");
 # Export 
 export genBitSequence!  , genBitSequence;
 export genByteSequence! , genByteSequence;
-
 
 # --- QAM bit mapping 
 include("bitMapping.jl");
@@ -48,6 +48,7 @@ export addNoise, addNoise!
 # --- Function definition  
 # ---------------------------------------------------- 
 # --- Q function definition 
+import SpecialFunctions.erfc
 """
 # --- qfunc.jl 
 # --- 
@@ -141,16 +142,91 @@ export getSIR;
 # --- Complex Convolution definition 
 # In DSP conv is only defined as Re * Re -> Extend to C
 import DSP.conv
-function conv(x::Array{Complex{Float64}},h::Array{Complex{Float64}})
-	y = conv(real(x),real(h)).-conv(imag(x),imag(h)).+ 1im*(conv(imag(x),real(h)).+conv(real(x),imag(h)));
+function conv(x::Array{Complex{T}},h::Array{Complex{T}}) where T
+	 y = conv(real(x),real(h)).-conv(imag(x),imag(h)).+ 1im*(conv(imag(x),real(h)).+conv(real(x),imag(h)));
 end
-function conv(x::Array{Complex{Float64}},h)
+function conv(x::Array{Complex{T}},h) where T
 	y = conv(real(x),h).+1im*conv(imag(x),h);
 end
-function conv(x,h::Array{Complex{Float64}})
+function conv(x,h::Array{Complex{T}}) where T
 	y = conv(x,real(h)).+1im*conv(x,imag(h));
 end
 
 
+# ---------------------------------------------------- 
+# --- Waveform type definition  
+# ---------------------------------------------------- 
+""" Waveform
+---  
+Abstract type gathering all waveform configuration 
+# v 1.0 - Robin Gerzaguet.
+"""
+abstract type Waveform end
+export Waveform 
+
+# --- Waveforms functions
+# ZC sequence
+include("./Waveforms/genZCSequence.jl");
+export genZCSequence;
+# LTE Allocation
+include("./Waveforms/getLTEAlloc.jl");
+export getLTEAlloc;
+
+# OFDM generation
+include("./Waveforms/OFDM/ofdmSigGen.jl");
+include("./Waveforms//OFDM/ofdmSigDecode.jl");
+export ofdmSigGen, initOFDM;
+export ofdmSigGen!;
+export ofdmSigDecode;
+export ofdmSigDecode!;
+
+# SC-FDMA generation
+include("./Waveforms//SCFDMA/scfdmaSigGen.jl");
+include("./Waveforms//SCFDMA/scfdmaSigDecode.jl");
+export scfdmaSigGen, initSCFDMA;
+export scfdmaSigDecode, scfdmaPostProcessing;
+
+# UF-OFDM generation
+include("./Waveforms//UFOFDM/filterUFOFDM.jl")
+include("./Waveforms//UFOFDM/ufofdmSigGen.jl");
+include("./Waveforms//UFOFDM/ufofdmSigDecode.jl");
+export ufofdmSigGen, initUFOFDM;
+export ufofdmSigDecode;
+
+# BF-OFDM generation
+include("./Waveforms/BFOFDM/BFOFDM_filter.jl")
+include("./Waveforms/BFOFDM/carrierManipulation.jl");
+include("./Waveforms/BFOFDM/bfofdmSigGen.jl");
+include("./Waveforms/BFOFDM/bfofdmSigDecode.jl");
+export getBFOFDMFilter;
+export getBFOFDM_subCarrierFromFBMCCarriers, getBFOFDM_carrierFromSubcarriers,getBFOFDM_oversampledGridSubcarriers;
+export bfofdmSigGen, initBFOFDM;
+export bfofdmSigDecode;
+
+# WOLA generation 
+include("./Waveforms/WOLA/getWolaWindow.jl");
+export getWolaWindow; 
+include("./Waveforms/WOLA/wolaSigGen.jl");
+export initWOLA,wolaSigGen
+include("./Waveforms/WOLA/wolaSigDecode.jl");
+export wolaSigDecode
+
+# FBMC Generation 
+include("./Waveforms/FBMC/fbmcSigGen.jl");
+export fbmcSigGen 
+export getFBMCFilter 
+export oqamMapping 
+export initFBMC 
+include("./Waveforms/FBMC/fbmcSigDecode.jl"); 
+export oqamDemapping 
+export fbmcSigDecode
+
+
+
+# --- Global waveform alias
+include("./Waveforms/genSig.jl");
+export genSig
+export initWaveforms 
+export decodeSig
 
 end
