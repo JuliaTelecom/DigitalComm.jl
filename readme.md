@@ -25,15 +25,15 @@ The package can be installed with the Julia package manager.
 From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
 
 ```
-pkg> add Documenter
+pkg> add DigitalComm
 ```
 
 Or, equivalently, via the `Pkg` API:
 
 ```julia
-julia> import Pkg; Pkg.add("Documenter")
+julia> import Pkg; Pkg.add("DigitalComm")
 ```
 
 ## Documentation
 
-[![][docs-stable-img]][docs-stable-url]
+- [**STABLE**][docs-stable-url] &mdash; **documentation of the most recently tagged version.**
