@@ -1,5 +1,4 @@
-""" StrucUFOFDM
----  
+""" 
 Structure for UFOFDM
 # --- Syntax 
 - nFFT		: FFT size [Int] 
@@ -24,7 +23,7 @@ struct StrucUFOFDM<: Waveform
 	pd::Array{Complex{Float64}};
 end
 
-""" initUFOFDM
+""" 
 ---  
 Create UF-OFDM structure
 # --- Syntax 
@@ -57,7 +56,7 @@ end
 
 
 
-""" ufofdmSigGen
+""" 
 ---  
 Apply Universal Filtered Orthogonal Frequency Division Multiplexing (UF-OFDM) to the time frequency matrix qamMat and returns a time domain UF-OFDM signal [1,2]
 ufofdm is parametrized by its FFT size, the filter length (in samples) and the allocatedSubcarriers vector. Optional parameters are carrier size in subcarrier (by default RB size which is 12) Dolph-Chebyshev window attenuation (40) and predistortion application (set to 1)
@@ -134,11 +133,12 @@ function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,att
 	        dataBlock			  = matrixSeqPD[1+(iB1-1)*sizeRB:iB1*sizeRB];
 	        # --- Setting data to adequate RB
 			sigToFFT			  = zeros(Complex{Float64},nFFT);
-			sigToFFT[carrierRB[iB,:]]	  = dataBlock;
+			sigToFFT[carrierRB[iB1,:]]	  = dataBlock;
 	        # --- IFFT
 	        sigIFFT				  = ifft(sigToFFT,1);
 	        # --- Apply filter on RB
-	        convT!(filteredSignal[iB1,:],sigIFFT,filterMat[iB1,:]);
+	        #convT!(filteredSignal[iB1,:],sigIFFT,filterMat[iB1,:]);
+	        filteredSignal[iB1,:] = convT(sigIFFT,filterMat[iB1,:]);
 	    end
 	    # --- Output UFOFDM symbol
 	    sigId[:,iB]	  = sum(filteredSignal,dims=1);
@@ -148,7 +148,7 @@ function ufofdmSigGen(qamMat,nFFT,L,allocatedSubcarriers;sizeRB=12,applyPD=1,att
 end
 # --- MD is waveform structure is given
 
-""" convT
+""" 
 ---  
 Perform time domain naive convolution. For UF-OFDM, size of filter is small so doing it in frequency domain is not appropriate
 # --- Syntax 
@@ -224,7 +224,7 @@ end
 
 
 
-""" ufofdmSigGen
+""" 
 ---  
 Apply Universal Filtered Orthogonal Frequency Division Multiplexing (UF-OFDM) to the time frequency matrix qamMat and returns a time domain UF-OFDM signal [1,2]
 ufofdm is parametrized by its FFT size, the filter length (in samples) and the allocatedSubcarriers vector. Optional parameters are carrier size in subcarrier (by default RB size which is 12) Dolph-Chebyshev window attenuation (40) and predistortion application (set to 1)

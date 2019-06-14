@@ -1,4 +1,4 @@
-""" bitDemappingQAM
+""" 
 ---  
 Quadrature Amplitude Modulation (QAM) hard decoding function
 Apply symbol hard demapping to a input symbol sequence (of size 1xN) with constellation size M.

@@ -1,4 +1,4 @@
-""" ofdmSigDecode
+""" 
 ---  
 Decodes a time domain OFDM signal and returns a T/F matrix with decoded QAM symbols
 # --- Syntax 
@@ -24,7 +24,7 @@ function ofdmSigDecode(sigChan,nFFT,nCP,allocSubcarriers)
 	return ofdmSigDecode!(qamRx,sigChan,nFFT,nCP,allocSubcarriers); 
 end
 
-""" ofdmSigDecode! 
+""" 
 ---  
 Decodes a time domain OFDM signal and populate the  T/F matrix with decoded QAM symbols
 # --- Syntax 
@@ -58,7 +58,7 @@ function ofdmSigDecode!(qamRx,sigChan,nFFT,nCP,allocSubcarriers)
 end
 
 
-""" ofdmSigDecode
+""" 
 ---  
 Decodes a time domain OFDM signal and returns a T/F matrix with decoded QAM symbols
 # --- Syntax 
@@ -78,7 +78,7 @@ function ofdmSigDecode(sigChan,ofdm::StrucOFDM)
 end
 
 
-""" ofdmSigDecode!
+""" 
 ---  
 Decodes a time domain OFDM signal and returns a T/F matrix with decoded QAM symbols
 # --- Syntax 

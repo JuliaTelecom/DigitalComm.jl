@@ -50,21 +50,19 @@ export addNoise, addNoise!
 # --- Q function definition 
 import SpecialFunctions.erfc
 """
-# --- qfunc.jl 
+---  
+Returns the Q function used for Bit error rate computation in digital system 
+ Q(x)= 1/2 erfc(x/sqrt(2))
+erfc is the Complexmplementary error function, i.e. the accurate version of 1-erf(x) for large x
+erfc is inherited from DSP
+# --- Syntax 
+y = qfunc(x)
+# --- Input parameters 
+- x: Input [Float64]
+# --- Output parameters 
+- y: Q(x)[Float64] 
 # --- 
-# Description 
-#    Returns the Q function used for Bit error rate computation in digital system 
-# Q(x)= 1/2 erfc(x/sqrt(2))
-#erfc is the Complexmplementary error function, i.e. the accurate version of 1-erf(x) for large x
-#erfc is inherited from 
-# --- 
-# Syntax 
-#y = qfunc(x)
-## --- Input parameters 
-#x: Input [Float64]
-#y: Q(x)[Float64] 
-# --- 
-# v 1.0 - Robinn Gerzaguet.
+# v 1.0 - Robin Gerzaguet.
 """
 function qFunc(x) 
 	return 1/2 * erfc.( x / sqrt(2));
@@ -72,26 +70,8 @@ end
 export qFunc;
 
 
-# --- SIR computation 
-# --- getSIR
-# ---
-# Description
-#    Returns the Signal to interference ratio expressed in dB (or in linear) between a obersvation signal d(n) and a reference signal u(n)
-#	 The ratio is expressed as 10*log10( E[ || d(n) - u(n) || / E[||u(n)||^2]  )
-#	  with E the expectation wrt to time
-#	  The 2 vectors d and u should have the same length L
-# ---
-# Syntax
-#		  sir	= getSIR( d, u , type="dB")
-#				# ---  Input parameters
-#					d	: Observation signal [Array{Any}]
-#					u	: Reference signal [Array{Any}]
-#					type: Output unit [String]: "dB" or "Linear"
-#				# --- Output parameters
-#					sir	: Signal to interference ratio in unit `type`
-# ---
-# v 1.0 - Robin Gerzaguet.
-""" getSIR 
+
+"""
 --- 
 Returns the Signal to interference ratio expressed in dB (or in linear) between a obersvation signal d(n) and a reference signal u(n)
 The ratio is expressed as 10*log10( E[ || d(n) - u(n) || / E[||u(n)||^2]  )
@@ -156,7 +136,7 @@ end
 # ---------------------------------------------------- 
 # --- Waveform type definition  
 # ---------------------------------------------------- 
-""" Waveform
+""" 
 ---  
 Abstract type gathering all waveform configuration 
 # v 1.0 - Robin Gerzaguet.

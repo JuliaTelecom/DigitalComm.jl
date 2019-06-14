@@ -1,4 +1,4 @@
-""" getLTEAlloc
+""" 
 ---  
 Returns the vector of allocated subcarriers associated to Long Term evolution frequency mapping.
 In LTE, depending on FFT size, only few subcarriers are allocated (45-55%). This function takes a FFT size as input 

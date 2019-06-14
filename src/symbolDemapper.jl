@@ -1,6 +1,6 @@
 
 # 64-QAM
-""" getDist
+"""
 ---  
 Calculate a euclidean distance based on input sample and alphabet distribution.
 Used for symbolDemappingQAM function 
@@ -44,7 +44,7 @@ function getDist!(baseComp,sR,alphabet,a1,a2)
 	return minimum(baseComp);
 end
 
-""" calcLLR 
+""" 
 ---  
 Returns the final LLR value based on input distances 
 # --- Syntax 
@@ -62,7 +62,7 @@ function calcLLR(e0,e1,c)
 	return (e0-e1) * c;
 end
 
-""" symbolDemappingQAM.jl
+"""
 ---
 # --- Description
 Returns the log likelihood ratio of the incoming sequence qamSeq based on the channel estimates channelIn. Max log approximation is considered
@@ -88,7 +88,7 @@ function symbolDemappingQAM(mcs,qamSeq,channel)
 	return output;
 end
 
-""" symbolDemappingQAM.jl
+""" 
 ---
 # --- Description
 Returns the log likelihood ratio of the incoming sequence qamSeq based on the channel estimates channelIn
@@ -269,7 +269,7 @@ end
 # ----------------------------------------------------
 # --- Convert LLR to Unsigned Char Array (soft decoder in C)
 # ----------------------------------------------------
-""" llrToUInt
+"""
 ---  
 Convert a LLR floating array to a UInt LLR 
 Some method (espcially C functions as in libfec) expect LLR to be UInt value from  0 (Likely a 0) to 255 (Likely a 1). 
@@ -300,7 +300,7 @@ function llrToUInt!(llrUInt,llr)
 	llrUInt .= UInt8.( round.(255* (1 .+ map(x->min(x,1),map(x->max(x,-1),llr)))/2));
 end
 
-""" llrToUInt
+"""
 ---  
 Convert a LLR floating array to a UInt LLR 
 Some method (espcially C functions as in libfec) expect LLR to be UInt value from  0 (Likely a 0) to 255 (Likely a 1). 
@@ -327,7 +327,7 @@ end
 # ----------------------------------------------------
 # --- Hard decoding from Soft LLRs
 # ----------------------------------------------------
-""" llrToHardBits
+""" 
 ---  
 Returns hard binary value from soft LLR estimate (no FEC decoder, only hard decision here!)
 # --- Syntax 
@@ -346,7 +346,7 @@ function llrToHardBits!(hardD,llr::Array{Float64})
 	return hardD
 end
 
-""" llrToHardBits
+"""
 ---  
 Returns hard binary value from soft LLR estimate (no FEC decoder, only hard decision here!)
 # --- Syntax 
@@ -365,7 +365,7 @@ function llrToHardBits!(hardD,llr::Array{UInt8})
 	return hardD
 end
 
-""" llrToHardBits
+"""
 ---  
 Returns hard binary value from soft LLR estimate (no FEC decoder, only hard decision here!)
 # --- Syntax 
@@ -383,7 +383,7 @@ function llrToHardBits(llr::Array{Float64})
 	return hardD
 end
 
-""" llrToHardBits
+""" 
 ---  
 Returns hard binary value from soft LLR estimate (no FEC decoder, only hard decision here!)
 # --- Syntax 

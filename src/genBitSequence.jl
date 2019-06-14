@@ -10,7 +10,7 @@ using Random
 # --- Source code 
 # ---------------------------------------------------- 
 
-""" genBitsequence!
+"""
 ---  
 Create a binary sequence and populate input buffer with nbBits bits
 The array is of type UInt8 with x00 or x01)
@@ -41,7 +41,7 @@ function genBitSequence!(buffer::Array{UInt8},nbBits,randSeed=-1)
 	end
 end
 
-""" genBitsequence
+"""
 ---  
 Create a binary sequence and return a buffer with nbBits bits
 The array is of type UInt8 with x00 or x01)
@@ -72,7 +72,7 @@ end
 
 
 
-""" genByteSequence!
+""" 
 ---  
 Create a byte sequence and populate input buffer with nbytes bytes
 The array is of type UInt8 with x00 to xff
@@ -105,7 +105,7 @@ function genByteSequence!(buffer::Array{UInt8},nbBytes,randSeed=-1)
 	return buffer;
 end
 
-""" genByteSequence
+""" 
 ---  
 Create a byte sequence and return a populated  buffer with nbytes bytes
 The array 

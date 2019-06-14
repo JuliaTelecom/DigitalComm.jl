@@ -1,40 +1,4 @@
-# --- wolaSigGen.jl
-# ---
-# Description
-#    Apply Weighted Overlap and Add Orthogonal Frequency Division Multiplexing (WOLA-OFDM) to the time frequency matrix qamMat and returns a time domain OFDM signal
-#	OFDM is parametrized by its FFT size, its cyclic prefix length (in samples) and the allocSubcarriers vector.
-#	The WOLA part is parametrized by the window applied at each beginning and ending of symbols. The window size can be (and is likely to be) higher than the length of the CP and pure OFDM compatibility is ensured by overlapping the symbols. The interested reader can refer to [1] [2] and [3] for WOLA principle description.
-# ---
-# Syntax
-#    sigId	= wolaSigGen(qamMat,nFFT,nCP,allocSubcarriers,winFunc,winLength=0)
-#			  # ---  Input parameters
-#					  qamMat  : Time frequency matrix : [Array{Complex{Float64},nbSubcarriers,nbSymb}]
-#										nbSymb			: Number of OFDM symbol tro be transmitted
-#										nbSubcarriers	: Number of allocated subcarriers (shall be < nFFT)
-#					  nFFT	  : FFT size [Int]
-#					  nCP	  : Cyclic prefix size (in samples) [Int]
-#					  allocSubcarriers : Vector of index of allocated subcarriers [Array{Int,nbSubcarriers}]
-#					  winFunc : Type of window. Can be a string of supported window or directly the window taps.
-#					  winLength : Length of window. This parameter is not used if winFunc is an array of the window tap.
-#			  # ---  Output parameters
-#					  sigId	  : WOLA-OFDM signal in time domain [Array{Complex{Float64},nbEch}]
-#										nbEch	: Number of samples: nbSymb*(nFFT+nCP)
-# ---
-# Supported window
-#	"Triangle"		: Triangle window
-#	"srrc"			: Square Root Raised Cosine
-#	"Meyer"			: Meyer window (See [1])
-# ---
-# References
-# [1] R. Zayani, Y. Medjahdi, H. Shaiek and D. Roviras, "WOLA-OFDM: A Potential Candidate for Asynchronous 5G," 2016.
-# [2] Y. Medjahdi and al, "On the road to 5G: Comparative study of Physical layer in MTC context", 2017.
-# [3] R. Gerzaguet and al, "Comparison of Promising Candidate Waveforms for 5G: WOLA-OFDM Versus BF-OFDM", 2017.
-# ---
-# v 1.0 - Robin Gerzaguet.
-
-# --- Define a structure associated to windowing
-
-""" StrucWOLA
+""" 
 ---  
 WOLA waveform structure 
 # --- Syntax 
@@ -55,7 +19,7 @@ struct StrucWOLA<: Waveform
 end
 
 
-""" initWOLA
+""" 
 ---  
 Create and initiate a WOLA waveform structure 
 # --- Syntax 
@@ -110,7 +74,7 @@ function initWOLA(nFFT,nCP,allocatedSubcarriers,winFuncTx,winLengthTx,winFuncRx,
 	return StrucWOLA(nFFT,nCP,allocatedSubcarriers,windowTx,windowRx);
 end
 
-""" wolaSigGen
+""" 
 ---  
 Apply Weighted Overlap and Add Orthogonal Frequency Division Multiplexing (WOLA-OFDM) to the time frequency matrix qamMat and returns a time domain OFDM signal
 OFDM is parametrized by its FFT size, its cyclic prefix length (in samples) and the allocSubcarriers vector.

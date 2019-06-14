@@ -1,4 +1,4 @@
-""" bitMappingQAM
+""" 
 ---  
 Quadrature Amplitude Modulation (QAM) function
    Apply symbol mapping to a input binary sequence (of size 1xL) with constellation size M.

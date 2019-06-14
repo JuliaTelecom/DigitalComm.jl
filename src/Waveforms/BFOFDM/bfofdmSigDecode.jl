@@ -1,4 +1,4 @@
-""" bfofdmSigDecode
+""" 
 ---  
 Demodulate a BF-OFDM signal and returns the obtained T/F matrix composed of QAM symbols (without equalisation).
 Based on bfofdmSigGen.jl

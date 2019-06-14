@@ -1,24 +1,22 @@
-# --- ufofdmSigGen.jl
-# ---
-# Description
-#    Apply Universal Filtered Orthogonal Frequency Division Multiplexing (UF-OFDM) to the time frequency matrix qamMat and returns a time domain ufofdm signal [1]
-#	ufofdm is parametrized by its FFT size, the filter length (in samples) and the allocatedSubcarriers vector. Optional parameters are carrier size in subcarrier (by default RB size which is 12)
-# ---
-# Syntax
-#    qamRx	= genereSignalufofdm(sigRx,nFFT,nCp,allocatedSubcarriers;sizeRB=12)
-#			  # ---  Input parameters
-#					  sigRx	  : Time UF-OFDM recevied signal [Array{Complex{Float64},nbEch}]
-
-#					  nFFT	  : FFT size [Int]
-#					  L		  : Dolph Chebyshev filter length [Int]
-#					  allocatedSubcarriers : Vector of index of allocated subcarriers [Array{Int,nbSubcarriers}]
-#					  sizeRB  : Carrier size in subcarriers (default : LTE RB size: 12) [Int]
-#			  # ---  Output parameters
-#				  qamRx  : Time frequency matrix : [Array{Complex{Float64},nbSubcarriers,nbSymb}]
-#										nbSymb			: Number of OFDM symbol tro be transmitted
-#										nbSubcarriers	: Number of allocated subcarriers (shall be < nFFT)
-# ---
+""" 
+---  
+Apply Universal Filtered Orthogonal Frequency Division Multiplexing (UF-OFDM) to the time frequency matrix qamMat and returns a time domain ufofdm signal [1]
+ufofdm is parametrized by its FFT size, the filter length (in samples) and the allocatedSubcarriers vector. Optional parameters are carrier size in subcarrier (by default RB size which is 12)
+# --- Syntax 
+qamRx	= genereSignalufofdm(sigRx,nFFT,nCp,allocatedSubcarriers;sizeRB=12)
+# ---  Input parameters
+- sigRx	  : Time UF-OFDM recevied signal [Array{Complex{Float64},nbEch}]
+- nFFT	  : FFT size [Int]
+- L		  : Dolph Chebyshev filter length [Int]
+- allocatedSubcarriers : Vector of index of allocated subcarriers [Array{Int,nbSubcarriers}]
+- sizeRB  : Carrier size in subcarriers (default : LTE RB size: 12) [Int]
+# ---  Output parameters
+- qamRx  : Time frequency matrix : [Array{Complex{Float64},nbSubcarriers,nbSymb}]
+- nbSymb			: Number of OFDM symbol tro be transmitted
+- nbSubcarriers	: Number of allocated subcarriers (shall be < nFFT)
+# --- 
 # v 1.0 - Robin Gerzaguet.
+"""
 
 function ufofdmSigDecode(sigRx,nFFT,L,allocatedSubcarriers;sizeRB=12,window=0)
 	# ----------------------------------------------------

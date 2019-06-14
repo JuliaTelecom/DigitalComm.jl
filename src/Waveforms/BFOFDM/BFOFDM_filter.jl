@@ -1,5 +1,5 @@
-""" getBFOFDMFilter
----  
+""" 
+
 Returns prototype fitlering matrix for BF-OFDM  with specified by overlapping factor K, PPN size nFBMC, filter type. Additional parameters are the CP size of the precoding stage (set to optimal value by default) and filter structure for specific parameter overset.
 # --- Syntax 
 (p,pF) = getBFOFDMFilter(K,nFBMC,filter;GI,BT,filterStopBand,fS)>

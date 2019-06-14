@@ -1,4 +1,4 @@
-""" addNoise
+""" 
 ---  
  Add a white additive circular gaussian noise to input signal
 Added noise is real if input signal is real and computedlex is input signal is complex
@@ -20,9 +20,6 @@ See the bang methods for non-buffer alloc.
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """
-# ----------------------------------------------------
-# --- AWGN with complex signal
-# ----------------------------------------------------
 function addNoise(x::Array{T},snr::Any,powSig=0) where T
 	# --- If powSig is equal to 0, power is computed with x input
 	# Expectation is taken with respect to time

@@ -1,4 +1,4 @@
-""" StrucFBMC
+""" 
 ---  
 FBMC waveform structure
 # --- Syntax 
@@ -14,7 +14,7 @@ struct StrucFBMC<: Waveform
 	allocatedSubcarriers::Array{Int};
 end
 
-""" initFBMC
+""" 
 ---  
 Initiate FBMC structure 
 # --- Syntax 
@@ -37,7 +37,7 @@ function initFBMC(nFFT,K,allocatedSubcarriers)
 	return StrucFBMC(nFFT,K,allocatedSubcarriers)
 end
 
-""" oqamMapping
+"""
 ---  
 Apply OQAM pre-processing to incoming matrix qamMat of size nbSubcarriers x nbSymb
 # --- Syntax 
@@ -71,7 +71,7 @@ function oqamMapping(qamMat)
 	return oqamMat;
 end
 
-""" getFBMCFilter
+"""
 ---  
 Returns the PHYDIAS time domain impulse response of desired FBMC filter parametrized by its overlapping factor and FFT size
 # --- Syntax 
@@ -127,7 +127,7 @@ function getFBMCFilter(K,nFFT)
 end
 
 
-""" fbmcSigGen
+"""
 ---  
 Generate a FBMC-OQAM signal in time domain, based on input complex matrix (before OQAM processing) and FBMC parameters.
 Transmitter is based on Polyphase Network implementation, with PHYDIAS filter (parametrized by overlapping factor).

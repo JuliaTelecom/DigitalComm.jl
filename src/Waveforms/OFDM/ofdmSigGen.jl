@@ -1,4 +1,4 @@
-""" StrucOFDM
+"""
 ---  
 Structure for OFDM
 # --- Syntax 
@@ -14,7 +14,7 @@ struct StrucOFDM <: Waveform
 	allocatedSubcarriers::Array{Int};
 end
 
-""" initOFDM
+""" 
 ---  
 Create OFDM structure 
 # --- Syntax 
@@ -37,7 +37,7 @@ function initOFDM(nFFT,nCP,allocatedSubcarriers)
 	return StrucOFDM(nFFT,nCP,allocatedSubcarriers)
 end
 
-""" ofdmSigGen
+""" 
 ---  
 Create OFDM signal in time domain based on input T/F matrix and OFDM parameters
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
@@ -62,7 +62,7 @@ function ofdmSigGen(qamMat,nFFT,nCP,allocatedSubcarriers)
 end 
 
 
-""" ofdmSigGen
+""" 
 ---  
 Populate a OFDM signal in time domain based on input T/F matrix and OFDM parameters
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
@@ -103,7 +103,7 @@ function ofdmSigGen!(sigId,qamMat,nFFT,nCP,allocatedSubcarriers)
 end
 
 # --- MD is waveform structure is given
-""" ofdmSigGen
+"""
 ---  
 Create OFDM signal in time domain based on input T/F matrix and OFDM structure  
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
@@ -124,7 +124,7 @@ end
 
 
 # --- MD is waveform structure is given
-""" ofdmSigGen
+""" 
 ---  
 Populate a  OFDM signal in time domain based on input T/F matrix and OFDM structure  
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 

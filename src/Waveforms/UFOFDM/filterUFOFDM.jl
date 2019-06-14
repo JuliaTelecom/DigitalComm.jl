@@ -1,4 +1,4 @@
-""" cheb
+""" 
 ---  
 Apply Chebyshev polynom of order L to input x
 # --- Syntax 
@@ -18,7 +18,7 @@ function cheb(L,x)
 	 return x;
 end
 
-""" dolphChebyshev
+""" 
 ---  
 Returns the Dolp Chebyshev filter of order L with desired attenation att
 See Peter Lynch, "The Dolph-Chebyshev Window: A Simple Optimal Filter", Monthly Weather Review, Vol. 125, pp. 655-660, April 1997. (http://www.maths.tcd.ie/~plynch/Publications/Dolph.pdf)

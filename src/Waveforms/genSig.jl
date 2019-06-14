@@ -1,4 +1,4 @@
-""" genSig
+""" 
 ---  
 Generate a time domain signal for a given multicarrier waveform. Input are the Time-Frequency matrix qamMat and the Waveform structure.
 # --- Syntax 
@@ -31,8 +31,8 @@ function genSig(qamMat,struc::StrucFBMC)
 end
 
 
-""" decodeSig
----  
+""" 
+
 Decode a time domain signal for a given multicarrier waveform and returns a T/F QAM constellation. Input are the compelx baseband signal  and the Waveform structure.
 # --- Syntax 
 	qamDec	= decodeSig(signal,struc);
@@ -64,7 +64,7 @@ function decodeSig(signal,struc::StrucFBMC)
 end
 
 
-""" getWaveformName
+""" 
 ---  
 Returns the waveform name based on input type structure
 # --- Syntax 
@@ -92,7 +92,7 @@ function getWaveformName(s::Waveform)
 	end
 end
 
-""" initWaveforms
+""" 
 ---  
 Create a dictionnary of waveform configurations. To compare and use the same script for different waveform configuration, we propose to add a dictionnary to have a container that contains all waveform configuraton. The function is called with every desired waveform structure. The dictionnary as a key associated to the waveform name, and a field associated to the waveform structure. If the waveform is present several times (several configuration with same waveform type, for instance FBMC with different overlapping factor values), a counter index is added to the waveform key.
 # --- Syntax 
@@ -130,7 +130,7 @@ function initWaveforms(x...)
 	return waveformDict;
 end
 
-""" genSig 
+""" 
 ---  
 Create a signal based on a waveform dictionnary and a desired configuration (i.e the key)
 # --- Syntax 
@@ -148,7 +148,7 @@ function genSig(qamMat::Array{Complex{Float64}},dict::Dict{String,Waveform},mod:
 	return genSig(qamMat,dict[mod]);
 end
 
-""" decodeSig 
+""" 
 ---  
 Create a signal based on a waveform dictionnary and a desired configuration (i.e the key)
 # --- Syntax 

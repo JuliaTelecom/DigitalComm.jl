@@ -1,7 +1,7 @@
 # ----------------------------------------------------
 # --- BF-OFDM structure
 # ----------------------------------------------------
-""" StrucBFOFDM
+"""
 ---  
 BF-OFDM structure 
 # --- Syntax 
@@ -37,9 +37,9 @@ struct StrucBFOFDM<: Waveform
 	nCP::Int;
 end
 
-""" StrucBFOFDM
+""" 
 ---  
-BF-OFDM structure 
+BF-OFDM initialisation
 # --- Syntax 
 bfofdm = initBFOFDM(nFBMC::Int,nOFDM::Int,K::Int,GI::Int,δ::Float64,allocatedSubcarriers::Array{Int},filterType::String;BT=-1,filterStopBand=-1,fS=[],nFFT=-1,nCP=-1)
 # --- Input parameters 
@@ -73,7 +73,7 @@ end
 # ----------------------------------------------------
 # --- Main BF-OFDM signal generation method
 # ----------------------------------------------------
-"""  bfofdmSigGen
+"""  
 --- 
 Creates a Block Filtered - OFDM (BF-OFDM) signal parametrized by its numerlogy and its waveform parameter. Generate a time domain signal based on the input matrix qamMat. The input matrix is a T/F matrix of size (nRe x nbSymb) with nRe the number of allocated subcarrier and nbSymb the number of symbols.
 The waveform is parametrized by the PPN size (number of carriers) nFBMC, the size of the precoding stage nOFDM, the CP size of the precoding stage GI and the compression factor parameter δ. See [1], [2] for waveform description and [3,5] for importance and design of compression rate (set to 0.5 in former works on BF-OFDM).

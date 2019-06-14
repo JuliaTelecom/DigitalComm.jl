@@ -1,4 +1,4 @@
-""" genZCSequence
+""" 
 ---  
 Constant Modulus Zero Autocorrelation (CAZAC) sequence generation. Sequence can be used as preamble sequences for OFDM systems. The function generate the ZC sequence in frequency domain.
 Generates a Zadoff-Chu  sequence on allocated subcarrier mapped on nFFT vector with generated kernel muPSS and power boost zcBoost

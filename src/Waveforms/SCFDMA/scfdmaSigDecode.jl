@@ -1,4 +1,4 @@
-""" scfdmaSigDecode
+""" 
 ---  
 Apply SCFDMA demodulator to input signal and returns the T/F QAM matrix
 # --- Syntax 
@@ -42,7 +42,7 @@ function scfdmaSigDecode(sigChan,nFFT,nCP,allocSubcarriers,sizeDFT,doPostProcess
 	return qamRx;
 end
 
-""" scfdmaPostProcessing
+"""
 ---  
 Apply Post processing for SC-FDMA (i.e DFT post-processing stage). This function can be called if scfdmaSigDecode is called with post processing flag to 0 (if frequency egalisation is done for example)
 # --- Syntax 
@@ -72,7 +72,7 @@ function scfdmaPostProcessing(qamMat,sizeDFT)
 end
 
 
-""" scfdmaSigDecode
+"""
 ---  
 Apply SCFDMA demodulator to input signal and returns the T/F QAM matrix
 # --- Syntax 

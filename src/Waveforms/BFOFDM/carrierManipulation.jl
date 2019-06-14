@@ -1,6 +1,6 @@
 # Usefull functions for subcarrier and carrier mappign in BF-OFDM
 
-""" getBFOFDM_subCarrierFromFBMCCarriers
+""" 
 ---  
 Get the index of the oversampled carrier (i.e subcarriers index in the precoding field) based on the index of the allocated carriers. It is assumed that for each carriers, all subcarriers are enable (with orthogonality, i.e Nδ allocated subcarriers).
 # --- Syntax 
@@ -28,7 +28,7 @@ function getBFOFDM_subCarrierFromFBMCCarriers(nFBMC, nOFDM, δ, fbmcCarriers)
 	return carrierOversamp
 end
 
-""" getBFOFDM_carrierFromSubcarriers
+""" 
 ---  
 Get the index of the allocated carriers based on the index of the subcarriers. We consider here that a FBMC carriers bear data (i.e is allocated) is at least one of its subcarrier is enable.
 # --- Syntax 
@@ -70,7 +70,7 @@ function getBFOFDM_carrierFromSubcarriers(nFBMC,nOFDM,δ,subcarriers)
 	return allCarriers[1:nbC-1];
 end
 
-""" getBFOFDM_oversampledGridSubcarriers
+""" 
 ---  
 Returns the oversampled grid at the subcarrier level for BF-OFDM. In BF-OFDM as we use a nOFDM*nFBMC grid with nOFDM*δ allocated subcarrier per carriers (for a precodinng stage of size nOFDM), it can be usefull to get all the index of the allocated subcarrier per carrier. The output is a vector of the allocated subcarrier index in the oversampled frequency grid.
 # --- Syntax 

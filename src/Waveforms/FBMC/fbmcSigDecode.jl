@@ -1,4 +1,4 @@
-""" oqamDemapping
+""" 
 ---  
 Apply OQAM demapping to incoming OQAM matrix qamMat of size nbSubcarriers x 2nbSymb
 # --- Syntax 
@@ -32,7 +32,7 @@ function oqamDemapping(oQamMat)
 	return qamMat;
 end
 
-""" fbmcSigDecode
+""" 
 ---  
 Demodulate FBMC waveform based on the dual operation of fbmcSigGen
 FBMC is parametrized by its FFT size, its cyclic prefix length (in samples) and the allocSubcarriers vector

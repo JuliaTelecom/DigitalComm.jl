@@ -1,4 +1,4 @@
-""" hardConstellation
+"""
 ---  
 Quadrature Amplitude Modulation (QAM) hard decoding function
 Return the hard decoded constellation with voronoi baseds decision. The difference with bitDeMapping is that bitDeMapping returns the decoded bit sequence whereas hardConstellation returns the closest constellation point. This can be use to compute raw EVM estimation (assuming a sufficiently high SNR to avoid errors).

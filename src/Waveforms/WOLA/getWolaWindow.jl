@@ -1,29 +1,4 @@
-# --- getWolaWindow.jl
-# ---
-# Description
-# Returns a window dedicated to WOLA (Weighted Overlap and Add) processing for multicarrier waveform. The window is parametrized by its name and its size.
-# ---
-# Syntax
-#					window = getWolaWindow(winFunc,nFFT,nCp,winlength)
-#						  # --- Input parameters
-#							  winFunc	: Window type (see supported format below) [String]
-#							  nFFT		: FFT size [Int]
-#							  nCP		: CP size [Int]
-#							  winlength : length of window [Int]
-#						  # --- Output parameters
-#							  window	: Window [Array{Float64},nFFT+nCP+winlength]
-# ---
-# Supported window
-#	"Triangle"		: Triangle window
-#	"srrc"			: Square Root Raised Cosine
-#	"Meyer"			: Meyer window (See [1])
-# ---
-# References
-# [1] R. Zayani, Y. Medjahdi, H. Shaiek and D. Roviras, "WOLA-OFDM: A Potential Candidate for Asynchronous 5G," 2016.
-# ---
-# v 1.0 - Robin Gerzaguet.
-
-""" Window
+""" 
 ---  
 Structure describing window parameters 
 # --- Syntax 
@@ -39,7 +14,7 @@ struct Window
 	window::Array{Float64};
 end
 
-""" getWolaWindow
+""" 
 ---  
 Returns the desired window used in transmitter or receiver weigthed overlap and add methods (WOLA). See [1] for window reference design.
 # --- Syntax 
