@@ -7,7 +7,8 @@ module example_PSD_waveform
 # ---------------------------------------------------- 
 using DigitalComm 
 # --- External Modules
-using Plots
+using Plots 
+plotly()
 using Printf
 using FFTW
 

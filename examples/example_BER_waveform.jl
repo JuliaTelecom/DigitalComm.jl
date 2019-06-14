@@ -12,7 +12,6 @@ using Printf
 using FFTW
 using ProgressMeter
 using Statistics
-using Plotly
 
 
 
@@ -86,7 +85,7 @@ function main()
 	# --- Overall parameters
 	# ----------------------------------------------------
 	# --- Overall PHY parameters
-	nbIt			= 2;			  # --- Iteration number
+	nbIt			= 5;			  # --- Iteration number
 	nbSymb 			= 14;			  # --- Number of symbols (one frame)
 	nFFT 			= 1024;			  # --- Base FFT size
 	samplingFreq	= 15.36;		  # --- Frequency value (MHz)
@@ -156,11 +155,13 @@ function main()
 	# Create  a dictionnary to rule them all 
 	waveforms 	= initWaveforms(ofdm,
 								scfdma,
-								#ufofdm,
+								ufofdm,
 								bfofdm,
 								wola,
 								fbmc,
 								);
+
+
 	# ---------------------------------------------------- 
 	# --- BER main calculation  
 	# ---------------------------------------------------- 
