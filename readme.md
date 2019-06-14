@@ -17,7 +17,7 @@ Currently, the package support the following elements
   * Raised Cosine pulse shape 
   * Square root raised Cosine pulse shape 
 - Multicarrier Waveform generation and decoding 
-  * Support of multicarrier Waveformr: OFDM, UF-OFDM, WOLA, BF-OFDM 
+  * Support of multicarrier Waveforms: OFDM, UF-OFDM, WOLA, BF-OFDM 
 
 ## Installation
 
