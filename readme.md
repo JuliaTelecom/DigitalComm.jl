@@ -19,7 +19,21 @@ Currently, the package support the following elements
 - Multicarrier Waveform generation and decoding 
   * Support of multicarrier Waveformr: OFDM, UF-OFDM, WOLA, BF-OFDM 
 
- ## Documentation 
+## Installation
 
- External documentation can be found here 
- FIXME: Create link
+The package can be installed with the Julia package manager.
+From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
+
+```
+pkg> add Documenter
+```
+
+Or, equivalently, via the `Pkg` API:
+
+```julia
+julia> import Pkg; Pkg.add("Documenter")
+```
+
+## Documentation
+
+- [**STABLE**][docs-stable-url] &mdash; **documentation of the most recently tagged version.**
