@@ -130,6 +130,7 @@ end
 """
 ---  
 Generate a FBMC-OQAM signal in time domain, based on input complex matrix (before OQAM processing) and FBMC parameters.
+
 Transmitter is based on Polyphase Network implementation, with PHYDIAS filter (parametrized by overlapping factor).
 # --- Syntax 
 fbmcSigGen(qamMat,nFFT,K,allocatedSubcarriers)

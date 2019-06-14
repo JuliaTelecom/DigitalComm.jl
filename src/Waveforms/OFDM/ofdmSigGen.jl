@@ -40,7 +40,9 @@ end
 """ 
 ---  
 Create OFDM signal in time domain based on input T/F matrix and OFDM parameters
+
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
+
 The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 # --- Syntax 
   sigId = ofdmSigGen(qamMat,nFFT,nCP,allocatedSubcarriers)
@@ -65,7 +67,9 @@ end
 """ 
 ---  
 Populate a OFDM signal in time domain based on input T/F matrix and OFDM parameters
+
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
+
 The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 # --- Syntax 
   ofdmSigGen!(sigId,qamMat,nFFT,nCP,allocatedSubcarriers)
@@ -106,7 +110,9 @@ end
 """
 ---  
 Create OFDM signal in time domain based on input T/F matrix and OFDM structure  
+
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
+
 The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 # --- Syntax 
   sigId = ofdmSigGen(qamMat,nFFT,nCP,allocatedSubcarriers)
@@ -127,7 +133,9 @@ end
 """ 
 ---  
 Populate a  OFDM signal in time domain based on input T/F matrix and OFDM structure  
+
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
+
 The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 # --- Syntax 
   ofdmSigGen!(sigId,qamMat,nFFT,nCP,allocatedSubcarriers)

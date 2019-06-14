@@ -59,6 +59,7 @@ end
 """ 
 ---  
 Apply Universal Filtered Orthogonal Frequency Division Multiplexing (UF-OFDM) to the time frequency matrix qamMat and returns a time domain UF-OFDM signal [1,2]
+
 ufofdm is parametrized by its FFT size, the filter length (in samples) and the allocatedSubcarriers vector. Optional parameters are carrier size in subcarrier (by default RB size which is 12) Dolph-Chebyshev window attenuation (40) and predistortion application (set to 1)
 # --- Syntax 
 sigId	= genereSignalufofdm(qamMat,nFFT,nCp,allocatedSubcarriers;sizeRB=12,applyPD=1,attenuation=40)
@@ -76,7 +77,6 @@ sigId	= genereSignalufofdm(qamMat,nFFT,nCp,allocatedSubcarriers;sizeRB=12,applyP
 - pdCoeffs	  : Predistortion  Filter coefficient (default empty and recreated)
 # ---  Output parameters
 - sigId	  : ufofdm signal in time domain [Array{Complex{Float64},nbEch}]
-	* nbEch	: Number of samples: nbSymb*(nFFT+L-1)
 # References
 - [1] R. Gerzaguet and al. The 5G candidate waveform race: a comparison of complexity and performance. EURASIP Journal on Wireless Communications and Networking, 2017
 - [2] V. Vakilian and al: Universal-filtered multi-carrier technique for wireless systems beyond LTE. Proc. IEEE Globecom Workshops (GC Wkshps), 2013
@@ -227,6 +227,7 @@ end
 """ 
 ---  
 Apply Universal Filtered Orthogonal Frequency Division Multiplexing (UF-OFDM) to the time frequency matrix qamMat and returns a time domain UF-OFDM signal [1,2]
+
 ufofdm is parametrized by its FFT size, the filter length (in samples) and the allocatedSubcarriers vector. Optional parameters are carrier size in subcarrier (by default RB size which is 12) Dolph-Chebyshev window attenuation (40) and predistortion application (set to 1)
 # --- Syntax 
 sigId	= genereSignalufofdm(qamMat,ufofdm);
@@ -235,7 +236,6 @@ sigId	= genereSignalufofdm(qamMat,ufofdm);
 - ufofdm  : UF-OFDM structure [StrucUFOFDM]
 # ---  Output parameters
 - sigId	  : ufofdm signal in time domain [Array{Complex{Float64},nbEch}]
-	* nbEch	: Number of samples: nbSymb*(nFFT+L-1)
 # References
 - [1] R. Gerzaguet and al. The 5G candidate waveform race: a comparison of complexity and performance. EURASIP Journal on Wireless Communications and Networking, 2017
 - [2] V. Vakilian and al: Universal-filtered multi-carrier technique for wireless systems beyond LTE. Proc. IEEE Globecom Workshops (GC Wkshps), 2013

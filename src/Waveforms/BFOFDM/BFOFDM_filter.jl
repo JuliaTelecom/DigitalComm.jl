@@ -17,26 +17,28 @@ Returns prototype fitlering matrix for BF-OFDM  with specified by overlapping fa
 Filter types
 All filter type can be called with 2 ways. "filter" and "filter_opt". When "filter_opt" is used, the filter coefficient are obtained through numerical optimisation (SIR optimisation). Otherwise, it uses its associated parameter to extract appropriate coefficients. See [1] and [2] for filter optimisation principles. See [4] for special cases about 5G-NR compatibilty. 
 The supported filter/windows are:
-Gaussian	: Gaussian filter shape, specified by BT. Optimized Gaussian shape can be used [1]
-phydyas		: Classic FBMC pulse shape defined in frequency domain [3]
-FS			: Coefficient defined in frequency domain. Filter coefficient are based on intrinsic SIR optimisation [1]
-DC			: Dolph Chebyshev window. Can be based on window optimisation (SIR optimisation) or defined by filterStopBand parameter.
+- Gaussian	: Gaussian filter shape, specified by BT. Optimized Gaussian shape can be used [1]
+- phydyas		: Classic FBMC pulse shape defined in frequency domain [3]
+- FS			: Coefficient defined in frequency domain. Filter coefficient are based on intrinsic SIR optimisation [1]
+- DC			: Dolph Chebyshev window. Can be based on window optimisation (SIR optimisation) or defined by filterStopBand parameter.
 # ---
 # References
-[1]	Demmer, D and Gerzaguet, R and Doré, J-B and Le Ruyet, D. and Kténas, D, "Filter Design for 5G BF-OFDM Waveform", 2017.
-[2] A. Sahin, I. Guvenc, and H. Arslan, “A Survey on Multicarrier Communications: Prototype Filters, Lattice Structures, and Implementation Aspects", 2014
-[3] Phydyas project, "Deliverable D5.1 : Prototype filter and structure optimization", 2009
-[4]	Demmer, D and Rostom, Z and Gerzaguet, R and Doré, J-B and Le Ruyet, D. "Study of OFDM Precoded Filter-Bank Waveforms", 2018
+- [1]	Demmer, D and Gerzaguet, R and Doré, J-B and Le Ruyet, D. and Kténas, D, "Filter Design for 5G BF-OFDM Waveform", 2017.
+- [2] A. Sahin, I. Guvenc, and H. Arslan, “A Survey on Multicarrier Communications: Prototype Filters, Lattice Structures, and Implementation Aspects", 2014
+- [3] Phydyas project, "Deliverable D5.1 : Prototype filter and structure optimization", 2009
+- [4]	Demmer, D and Rostom, Z and Gerzaguet, R and Doré, J-B and Le Ruyet, D. "Study of OFDM Precoded Filter-Bank Waveforms", 2018
 # Examples
 Get a classic FBMC filter with phydyas and an overlapping factor of 4, with a input PPN of size 64. The precodinng stage is a OFDM of size 64 and a GI of size 4.
-# --- phydyas filter
-( hphydyas,hFphydyas )	 = getBFOFDMFilter(4,64,"phydyas");
-Get an optimized Gaussian window for the same parameters
-# --- Gaussian shape
-( hGaussian,hFGaussian )	 = getBFOFDMFilter(4,64,"Gaussian_opt",GI=4);
-Get a specific Gaussian window with a BT of 0.5.
-# --- Custom Gaussian window
-( hGaussianC,hFGaussianC ) = getBFOFDMFilter(4,64,"Gaussian",GI=4,BT=0.5)
+
+	# --- phydyas filter
+	( hphydyas,hFphydyas )	 = getBFOFDMFilter(4,64,"phydyas");
+
+	# --- Gaussian shape
+	( hGaussian,hFGaussian )	 = getBFOFDMFilter(4,64,"Gaussian_opt",GI=4);
+
+	# --- Custom Gaussian window
+	( hGaussianC,hFGaussianC ) = getBFOFDMFilter(4,64,"Gaussian",GI=4,BT=0.5)
+
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """

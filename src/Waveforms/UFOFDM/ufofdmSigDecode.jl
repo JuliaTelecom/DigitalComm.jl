@@ -1,6 +1,7 @@
 """ 
 ---  
 Apply Universal Filtered Orthogonal Frequency Division Multiplexing (UF-OFDM) to the time frequency matrix qamMat and returns a time domain ufofdm signal [1]
+
 ufofdm is parametrized by its FFT size, the filter length (in samples) and the allocatedSubcarriers vector. Optional parameters are carrier size in subcarrier (by default RB size which is 12)
 # --- Syntax 
 qamRx	= genereSignalufofdm(sigRx,nFFT,nCp,allocatedSubcarriers;sizeRB=12)

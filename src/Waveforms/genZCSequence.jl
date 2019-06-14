@@ -6,9 +6,9 @@ Generates a Zadoff-Chu  sequence on allocated subcarrier mapped on nFFT vector w
 zcSeq	  = genZCSequence(nFFT,allocatedSubcarrier,muPSS=0,zcBoost=0)
 # --- Input parameters 
 - nFFT				  : FFT size for output [Int]
-- allocatedSubcarrier : vector of allocated subcarrier [Array{Int,L}]. Each element should belong to [0...nFFT]
-- muPSS				  : Kernel for ZC sequence [Int] (default 0)
-- zcBoost			  : Power boost (in dB) applied to sequence [Float32] (default 0).
+- allocatedSubcarrier : vector of allocated subcarrier [Array{Int,L}]. 
+- muPSS				  : Kernel for ZC sequence [Int] -- default 0
+- zcBoost			  : Power boost (in dB) applied to sequence [Float32] -- default 0.
 # --- Output parameters
 - zcSeq				  : ZC sequence [Array{Complex{Float64}},nFFT]
 # --- 

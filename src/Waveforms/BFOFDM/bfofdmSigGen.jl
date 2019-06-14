@@ -76,10 +76,11 @@ end
 """  
 --- 
 Creates a Block Filtered - OFDM (BF-OFDM) signal parametrized by its numerlogy and its waveform parameter. Generate a time domain signal based on the input matrix qamMat. The input matrix is a T/F matrix of size (nRe x nbSymb) with nRe the number of allocated subcarrier and nbSymb the number of symbols.
+
 The waveform is parametrized by the PPN size (number of carriers) nFBMC, the size of the precoding stage nOFDM, the CP size of the precoding stage GI and the compression factor parameter δ. See [1], [2] for waveform description and [3,5] for importance and design of compression rate (set to 0.5 in former works on BF-OFDM).
+
 BF-OFDM is characterized by its pulse shape filter. Pulse shape can be automatically tuned to optimal (in terms of  innterference management) [4]. In such a case, filterType should be a string (can be "gaussian_opt", "dc_opt" and "fs_opt"). For a specific pulse shape filter, an array of the nFBMC*K filter taps should be given (and generated for example  with getBFOFDMFilter).
-# ---
-Syntax
+# --- Syntax
 sigId	  =bfofdmSigGen(qamMat,nFBMC,nOFDM,K,GI,δ,allocatedSubcarriers,filterType;typeTx="PPN")
 # --- Input parameters
 - qamMat		: T/F symbols to transmit (QAM symbols) [Array{Complex{Float64},nRe,nbSymb] with nbSymb number of BF-OFDM symbols and nRe number of allocated subcarriers.

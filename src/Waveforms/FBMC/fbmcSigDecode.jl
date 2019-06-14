@@ -35,6 +35,7 @@ end
 """ 
 ---  
 Demodulate FBMC waveform based on the dual operation of fbmcSigGen
+
 FBMC is parametrized by its FFT size, its cyclic prefix length (in samples) and the allocSubcarriers vector
 # Syntax
 sigId	= fbmcSigDecode(sigRx,nFFT,K,allocSubcarriers)

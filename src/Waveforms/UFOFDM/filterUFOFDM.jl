@@ -21,6 +21,7 @@ end
 """ 
 ---  
 Returns the Dolp Chebyshev filter of order L with desired attenation att
+
 See Peter Lynch, "The Dolph-Chebyshev Window: A Simple Optimal Filter", Monthly Weather Review, Vol. 125, pp. 655-660, April 1997. (http://www.maths.tcd.ie/~plynch/Publications/Dolph.pdf)
 Dolph, "A current distribution for broadside arrays which optimizes the relationship between beam width and side-lobe level", Proc. IEEE, 34, pp. 335-348.
 		cheb(m-1, beta * cos(pi * k/m))

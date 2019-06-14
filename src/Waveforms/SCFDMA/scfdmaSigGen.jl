@@ -44,7 +44,9 @@ end
 """
 ---  
 Create SCFDMA signal in time domain based on input T/F matrix and SCFDMA parameters. SCFDMA apply a precoder before the IFFT at the transmitter side in order to lower the signal fluctuation
+
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
+
 The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 # --- Syntax 
   sigId = scfdmaSigGen(qamMat,nFFT,nCP,allocatedSubcarriers)
@@ -88,6 +90,7 @@ end
 ---  
 Create SCFDMA signal in time domain based on input T/F matrix and SCFDMA parameters. SCFDMA apply a precoder before the IFFT at the transmitter side in order to lower the signal fluctuation
 qamMat is a complex symbol matrix (for instance QPSK) of size length(allocatedSubcarriers) x nbSymb 
+
 The output signal in time domain is of size (nFFT+nCP)xnbSymb.
 # --- Syntax 
 sigId = scfdmaSigGen(qamMat,scfdma)

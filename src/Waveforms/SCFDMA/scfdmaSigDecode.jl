@@ -13,8 +13,6 @@ qamRx	= scfdmaSigDecode(sigId,nFFT,nCP,allocSubcarriers,sizeDFT);
 - doPostProcessing : Do the post processing stage (IDFT): Default 1. In some case, we need the raw data (i.e data before postprocessing stage) such as in channel equalisation. In this case, the post processing should be done in a separate step (with the call of scfdmaPostProcessing function)
 # ---  Output parameters
 - qamRx  : Time frequency matrix : [Array{Complex{Float64},nbSubcarriers,nbSymb}]
-	  * nbSymb			: Number of SCFDMA symbol tro be transmitted
-	  * nbSubcarriers	: Number of allocated subcarriers (shall be < nFFT)
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """
@@ -52,8 +50,6 @@ qamPost	  = scfdmaPostProcessing(qamMat,sizeDFT)
 - sizeDFT	: Precoder bloc size (often 12)
 # --- Output parameters 
 - qamPost	: T/F matrix after IDFT processing [Array{Complex{Float64},nbSubcarriers,nbSymb}]
-	* nbSubcarriers : Number of allocated subcarriers 
-	* nbSymb		: Numbber of decoded symbols
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """
@@ -84,8 +80,6 @@ qamRx	= scfdmaSigDecode(sigId,nFFT,nCP,allocSubcarriers,sizeDFT);
 - doPostProcessing : Do the post processing stage (IDFT): Default 1. In some case, we need the raw data (i.e data before postprocessing stage) such as in channel equalisation. In this case, the post processing should be done in a separate step (with the call of scfdmaPostProcessing function)
 # ---  Output parameters
 - qamRx  : Time frequency matrix : [Array{Complex{Float64},nbSubcarriers,nbSymb}]
-	  * nbSymb			: Number of SCFDMA symbol tro be transmitted
-	  * nbSubcarriers	: Number of allocated subcarriers (shall be < nFFT)
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """

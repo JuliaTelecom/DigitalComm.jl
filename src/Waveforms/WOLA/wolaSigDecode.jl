@@ -16,8 +16,6 @@ qamRx	= wolaSigDecode(sigId,nFFT,nCP,allocSubcarriers);
 - winLength : Length of window. This parameter is not used if winFunc is an array of the window tap.
 # ---  Output parameters
 - qamMat  : Time frequency matrix : [Array{Complex{Float64},nbSubcarriers,nbSymb}]
-	  * nbSymb			: Number of OFDM symbol tro be transmitted
-	  * nbSubcarriers	: Number of allocated subcarriers (shall be < nFFT)
 # ---
 # Supported window
 -	"Triangle"		: Triangle window
