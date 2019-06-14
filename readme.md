@@ -36,4 +36,4 @@ julia> import Pkg; Pkg.add("Documenter")
 
 ## Documentation
 
-- [**STABLE**][docs-stable-url] &mdash; **documentation of the most recently tagged version.**
+[![][docs-stable-img]][docs-stable-url]
