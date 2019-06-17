@@ -9,8 +9,7 @@ Currently, the package support the following elements
   * Generation of random binary sequence 
   * Conversion between binary sequences and octal sequences 
 - Modulation // demodulation
-  * Quadrature Amplitude Modulation (QAM) with 4-QAM (QPSK), 16-QAM,
-  * 64-QAM and 256-QAM. 
+  * Quadrature Amplitude Modulation (QAM) with 4-QAM (QPSK), 16-QAM, 64-QAM and 256-QAM. 
   * Hard demapper for the x-QAM formats 
   * Max log Soft demapper for the x-QAM formats
 - Single carrier pulses shapes 
