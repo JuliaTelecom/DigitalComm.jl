@@ -21,3 +21,6 @@ include("test_symbolDemapper.jl");
 
 # AWGN 
 include("test_addNoise.jl");
+
+# Test Waveforms 
+include("test_waveforms.jl");
