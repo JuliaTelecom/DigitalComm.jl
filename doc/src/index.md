@@ -1,106 +1,42 @@
 # DigitalComm.jl documentation 
 
-
-
 ## Summary 
 
-```@contents
+
+This package aims to provide some usefull tools to manipulate digital
+communication blocks in Julia. 
+Currently, the package support the following elements 
+- Bit manipulation 
+  * Generation of random binary sequence 
+  * Conversion between binary sequences and octal sequences 
+- Modulation // demodulation
+  * Quadrature Amplitude Modulation (QAM) with 4-QAM (QPSK), 16-QAM, 64-QAM and 256-QAM. 
+  * Hard demapper for the x-QAM formats 
+  * Max log Soft demapper for the x-QAM formats
+- Single carrier pulses shapes 
+  * Raised Cosine pulse shape 
+  * Square root raised Cosine pulse shape 
+- Multicarrier Waveform generation and decoding 
+  * Support of multicarrier Waveforms: OFDM, UF-OFDM, WOLA, BF-OFDM 
+
+## Installation
+
+The package can be installed with the Julia package manager.
+From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
+
+```
+pkg> add DigitalComm
+```
+
+Or, equivalently, via the `Pkg` API:
+
+```julia
+julia> import Pkg; Pkg.add("DigitalComm")
 ```
 
 
-
-## Common functions 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["DigitalComm.jl"]
-Order   = [:function, :type]
-Depth	= 1
-```
+## Documentation 
 
 
-## Quadrature Amplitude Modulation 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["genBitSequence.jl","bitMapping.jl","bitDeMapping.jl","hardConstellation.jl","symbolDemapper.jl"]
-Order   = [:function, :type]
-Depth	= 1
-```
-
-
-## Channels 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["addNoise.jl"]
-Order   = [:function, :type]
-Depth	= 1
-```
-
-# Waveforms 
-
-## Common functions 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["genSig.jl","genZCSequence.jl","getLTEAlloc.jl"]
-Order   = [:function, :type]
-Depth	= 0
-```
-
-## BF-OFDM 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["Waveforms/BFOFDM/BFOFDM_filter.jl","Waveforms/BFOFDM/bfofdmSigGen.jl","Waveforms/BFOFDM/bfofdmSigDecode.jl","Waveforms/BFOFDM/carrierManipulation.jl"]
-Order   = [:function, :type]
-Depth	= 0
-```
-
-## FBMC 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["Waveforms/FBMC/fbmcSigGen.jl","Waveforms/FBMC/fbmcSigDecode.jl"]
-Order   = [:function, :type]
-Depth	= 0
-```
-
-
-## OFDM 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["Waveforms/OFDM/ofdmSigGen.jl","Waveforms/OFDM/ofdmSigDecode.jl"]
-Order   = [:function, :type]
-Depth	= 0
-```
-
-## SC-FDMA 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["Waveforms/UFOFDM/ufofdmSigGen.jl","Waveforms/UFOFDM/ufofdmSigDecode.jl"]
-Order   = [:function, :type]
-Depth	= 0
-```
-
-##  UF-OFDM
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["Waveforms/filterUFOFDM.jl","Waveforms/SCFDMA/scfdmaSigGen.jl","Waveforms/SCFDMA/scfdmaSigDecode.jl"]
-Order   = [:function, :type]
-Depth	= 0
-```
-
-
-## WOLA 
-
-```@autodocs
-Modules = [DigitalComm]
-Pages   = ["Waveforms/WOLA/wolaSigGen.jl","Waveforms/WOLA/wolaSigDecode.jl"]
-Order   = [:function, :type]
-Depth	= 0
-```
+- The base documentation with the different functions can be found [in the base section](base.md)
+- Different examples are described in [in the example section](example.md). Other examples are provided in the example subfolder of the project. 

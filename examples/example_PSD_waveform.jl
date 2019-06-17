@@ -8,7 +8,7 @@ module example_PSD_waveform
 using DigitalComm 
 # --- External Modules
 using Plots 
-plotly()
+gr();
 using Printf
 using FFTW
 
