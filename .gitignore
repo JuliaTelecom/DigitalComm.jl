@@ -3,3 +3,4 @@
 *.jl.mem
 *.aux
 *.log
+docs/build/
