@@ -2,7 +2,7 @@ push!(LOAD_PATH, "../src/")
 using Documenter, DigitalComm
 
 makedocs(sitename="DigitalComm.jl", 
-		 format = Documenter.HTML(prettyurls = false),
+		 format = Documenter.HTML(),
 		 pages    = Any[
 						"Introduction to DigitalComm"   => "index.md",
 						"Function list"          => "base.md",
