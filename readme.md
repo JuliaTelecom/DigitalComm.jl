@@ -1,4 +1,9 @@
-# DigitalComm package 
+<div align="center">
+<img src="docs/src/assets/logo.png" alt="Makie.jl" width="240">
+</div>
+
+# DigitalCom.jl 
+
 
 ## Purpose 
 
