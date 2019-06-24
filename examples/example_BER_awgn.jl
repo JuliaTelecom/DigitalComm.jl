@@ -83,7 +83,7 @@ function main()
 				# ---------------------------------------------------- 
 				# --- Create random sequence 
 				# Forcing seed
-				genBitSequence!(bitSeq,nbBits,124+iN);
+				genBitSequence!(bitSeq,nbBits);
 				# --- QPSK mapping
 				bitMappingQAM!(qamSeq,mcs,bitSeq);
 				# ---------------------------------------------------- 
