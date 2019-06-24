@@ -1,5 +1,5 @@
 <div align="center">
-<img src="docs/src/assets/logo.png" alt="Makie.jl" width="240">
+<img src="docs/src/assets/logo.png" alt="Makie.jl" width="480">
 </div>
 
 # DigitalCom.jl 
