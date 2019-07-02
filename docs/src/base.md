@@ -24,7 +24,7 @@ Depth	= 1
 
 ```@autodocs
 Modules = [DigitalComm]
-Pages   = ["addNoise.jl"]
+Pages   = ["Channel/addNoise.jl","Channel/rayleighChan.jl","Channel/getChannel.jl"]
 Order   = [:function, :type]
 Depth	= 1
 ```

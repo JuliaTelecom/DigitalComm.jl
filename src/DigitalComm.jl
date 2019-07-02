@@ -39,8 +39,15 @@ export llrToHardBits! , llrToHardBits;
 export llrToUInt! , llrToUInt; 
 
 # --- AWGN channel model 
-include("addNoise.jl");
+include("Channel/addNoise.jl");
 export addNoise, addNoise!
+include("Channel/rayleighChan.jl");
+export rayleighChan; 
+include("Channel/getChannel.jl");
+export initChannel 
+export getChannel 
+export getFIRResponse
+export applyChannel 
 
 
 
