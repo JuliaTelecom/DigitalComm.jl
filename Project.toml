@@ -1,7 +1,7 @@
 name = "DigitalComm"
 uuid = "a7b11256-881b-11e9-3aff-ff4a76f1bfae"
 authors = ["Robin Gerzaguet <robin.gerzaguet@irisa.fr>"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 DSP = "717857b8-e6f2-59f4-9121-6e50c889abd2"
