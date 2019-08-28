@@ -11,7 +11,7 @@ module DigitalComm
 # Only submodules are considered so don't need to overload too much packages here 
 # --> Go to next section with submodules loading 
 using FFTW 
-
+using Statistics
 
 # ---------------------------------------------------- 
 # --- Submodules inclusion  
