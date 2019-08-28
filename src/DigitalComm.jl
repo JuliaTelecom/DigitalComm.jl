@@ -130,7 +130,7 @@ export getSIR;
 Calculate the average power of the input signal 
 σ	= 1 / N Σ | x[n] | ^2 
 # --- Syntax 
-<++>
+σ	= avgPower(x);
 # --- Input parameters 
 - x	  : Input signal [Array{Any}]
 # --- Output parameters 
