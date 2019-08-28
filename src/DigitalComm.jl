@@ -126,18 +126,18 @@ end
 export getSIR;
 
 
-# --- Complex Convolution definition 
-# In DSP conv is only defined as Re * Re -> Extend to C
-import DSP.conv
-function conv(x::Array{Complex{T}},h::Array{Complex{T}}) where T
-	 y = conv(real(x),real(h)).-conv(imag(x),imag(h)).+ 1im*(conv(imag(x),real(h)).+conv(real(x),imag(h)));
-end
-function conv(x::Array{Complex{T}},h) where T
-	y = conv(real(x),h).+1im*conv(imag(x),h);
-end
-function conv(x,h::Array{Complex{T}}) where T
-	y = conv(x,real(h)).+1im*conv(x,imag(h));
-end
+## --- Complex Convolution definition 
+## In DSP conv is only defined as Re * Re -> Extend to C
+#import DSP.conv
+##function conv(x::Array{Complex{T}},h::Array{Complex{T}}) where T
+	 ##y = conv(real(x),real(h)).-conv(imag(x),imag(h)).+ 1im*(conv(imag(x),real(h)).+conv(real(x),imag(h)));
+##end
+#function conv(x::Array{Complex{T}},h) where T
+	#y = conv(real(x),h).+1im*conv(imag(x),h);
+#end
+#function conv(x,h::Array{Complex{T}}) where T
+	#y = conv(x,real(h)).+1im*conv(x,imag(h));
+#end
 
 
 # ---------------------------------------------------- 
