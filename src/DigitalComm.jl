@@ -113,7 +113,7 @@ function getSIR(d,u,type="dB")
 		error("getSIR.jl: Observation and reference signals should have the same length")
 	end
 	# --- Calculating SIR
-	sirLinear	= mean( (abs2.( ur - dr))) / custMean( (abs2.(dr)));
+	sirLinear	= mean( (abs2.( ur - dr))) / mean( (abs2.(dr)));
 	# --- Setting output
 	if castype == 1
 		# --- Return linear SIR
