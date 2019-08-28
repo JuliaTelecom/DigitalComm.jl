@@ -125,6 +125,23 @@ function getSIR(d,u,type="dB")
 end
 export getSIR;
 
+""" 
+---
+Calculate the average power of the input signal 
+σ	= 1 / N Σ | x[n] | ^2 
+# --- Syntax 
+<++>
+# --- Input parameters 
+- x	  : Input signal [Array{Any}]
+# --- Output parameters 
+- σ	  : Estimated power [Float64]
+# --- 
+# v 1.0 - Robin Gerzaguet.
+"""
+function avgPower(x)
+	return 1/length(x) * sum( abs2.(x) ) ;
+end
+export avgPower
 
 ## --- Complex Convolution definition 
 ## In DSP conv is only defined as Re * Re -> Extend to C
