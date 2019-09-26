@@ -9,7 +9,7 @@ using Test
 # Note --> The mapping system is described in bitMapping.jl
 
 println("Tests for Hard symbol demapper");
-for alphabet = [4;16;64;256]
+for alphabet = [2;4;16;64;256]
 	@testset  "$alphabet-QAM" begin 
 		# Minimal Tx 
 		mcs	  = alphabet;		  # Constellation size 

@@ -32,7 +32,11 @@ function bitMappingQAM!(qamMat,M, bitSeq)
 	# ----------------------------------------------------
 	# --- Switch on modulation order
 	# ----------------------------------------------------
-	if M == 4
+	if M == 2 
+		# --- BPSK modulator 
+		# No need to rescale data, binary is direcly inherited from binary stream 
+		qamMat	.= 2 .*bitSeq[:] .- 1; 
+	elseif M == 4
 		## --- QPSK modulator
 		# QPSK mapping
 		# Odd bit are in I; Even bits are in Q = [I1 Q1 ...]

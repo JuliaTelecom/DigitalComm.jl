@@ -9,6 +9,25 @@ using Test
 # Note --> The mapping system is described in bitMapping.jl
 println("Tests for symbol mapper with QAM sequences");
 
+@testset  "bpsk" begin 
+	# Create a bit squence (already tested) 
+	nbBits	= 2 * 2048;
+	bitSeq  = genBitSequence(nbBits);
+	# Pass trough the function 
+	buff	= zeros(Complex{Float64},nbBits)
+	# Call 
+	bitMappingQAM!(buff,2,bitSeq); 
+	buff2	= bitMappingQAM(2,bitSeq);
+	@test all( buff .== buff2)
+	# --- Good const point
+	# For BPSK, we should have |r|^2 = 1
+	@test all(abs.(real(buff)) .== 1);
+	# Some manual check due to gray coding 
+	buff  = [0x01 0x00 0x00 0x00 0x00 0x01 0x01 0x01 ];
+	@show bitMappingQAM(2,buff)
+	@test all(bitMappingQAM(2,buff) .≈ [1; -1; -1; -1; -1; 1; 1; 1]);
+end
+
 @testset  "qpsk" begin 
 	# Create a bit squence (already tested) 
 	nbBits	= 2 * 2048;

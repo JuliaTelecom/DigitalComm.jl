@@ -28,7 +28,10 @@ function bitDemappingQAM!(hardBits,M, qamVect)
 	# ----------------------------------------------------
 	# Here all Voronoi region are defined with normalized constellation
 	# Symbol demapper are recall from bitMappingQAM (without rescaling factor)
-	if M == 4
+	if M == 2 
+		## BPSK demodulator 
+		hardBits .= Int.( real(qamVect) .> 0);
+	elseif M == 4
 		## --- QPSK demodulator
 		# --- Gray encoding
 		#  -1  1
