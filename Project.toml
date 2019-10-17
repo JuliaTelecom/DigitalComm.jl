@@ -17,7 +17,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 julia = "1"
-DSP = "0.5"
+DSP = "≥ 0.5"
 SpecialFunctions = "0.8"
 Parameters = "0.12"
-FFTW = "1"
+FFTW = "≥ 1.0.1"
