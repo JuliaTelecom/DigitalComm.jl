@@ -12,6 +12,7 @@ module DigitalComm
 # --> Go to next section with submodules loading 
 using FFTW 
 using Statistics
+using DSP
 
 # ---------------------------------------------------- 
 # --- Submodules inclusion  
