@@ -57,13 +57,14 @@ end
 ---  
  Create a channel object associated to physical parameters and propagation profile.
 # --- Syntax 
-channObj  = initChannel(profile,carrierFreq,samplingFreq,dopplerFreq,powerProfile,delayProfile,randSeed=-1)
-# --- Input parameters 
+channObj  = initChannel(profile,carrierFreq,samplingFreq,dopplerFreq;powerProfile=[],delayProfile=[],randSeed=-1)
 # --- Input parameters
 - profile : Multipath profile (see below) [String]
 - carrierFreq : Carrier frequency in Hz [Union{Int,Float64}]
 - samplingFreq: baseband sampling frequency [Union{Int,Float64}]
 - speed : Velocity (km/h) [Float64]
+- powerProfile	: User defined power profile (default []). In case when it is defined, delayProfile should also be defined and profile is not used. [Array{Float}]
+- delayProfile	: User defined delay profile in second [Array{Float64}]
 - randSeed : Seed if necessary (default: -1) [Float64]
 # --- Output parameters
 - channel : Julia Channel Object [Channel]
