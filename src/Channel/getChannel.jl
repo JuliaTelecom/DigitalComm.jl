@@ -312,16 +312,10 @@ function getChannel(nbSamples::Int,channelModel::ChannelModel,randSeed=-1)
 			freq	  = channelModel.samplingFreq;
 			# --- Ensuring additional delay for proper interpolation
 			delay	  = channelModel.delayProfile .+ fdGap;
-			cir		  = zeros(Complex{Float64}, nbSamples, delaySpread + sS);
-			for indexTime = 1 : 1: nbSamples
-				for k = 1 : 1 : delaySpread + sS
-					# --- Each index is superimposition of all timed compondent
-					for ∂ = 1 : 1 : nbTaps
-						# --- Shannon interpolation with sinc. on sincSupport
-						cir[indexTime,k] += powerLin[∂] * raylAmpl[indexTime,∂] * sinc.(pi*(k/freq - delay[∂]) * freq);
-					end
-				end
-			end
+            # --- Shannon interpolation with sinc. on sincSupport
+            shannonInterp = sinc.(pi.*(transpose(1:delaySpread+sS)./freq .- delay) .* freq);
+            # --- Each index is superimposition of all timed compondent
+            cir = transpose(powerLin) .* raylAmpl * shannonInterp;
 			return ChannelImpl(1,cir,channelModel,powerLin,randSeed);
 		else
 			# ----------------------------------------------------
