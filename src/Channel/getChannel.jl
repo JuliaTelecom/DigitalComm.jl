@@ -315,7 +315,7 @@ function getChannel(nbSamples::Int,channelModel::ChannelModel,randSeed=-1)
             # --- Shannon interpolation with sinc. on sincSupport
             shannonInterp = sinc.(pi.*(transpose(1:delaySpread+sS)./freq .- delay) .* freq);
             # --- Each index is superimposition of all timed compondent
-            cir = transpose(powerLin) .* raylAmpl * shannonInterp;
+            cir = transpose(powerLin) .* raylAmpl[1:nbSamples] * shannonInterp;
 			return ChannelImpl(1,cir,channelModel,powerLin,randSeed);
 		else
 			# ----------------------------------------------------
