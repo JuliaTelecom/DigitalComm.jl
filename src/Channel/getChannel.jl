@@ -350,7 +350,9 @@ sigChan	  : applyChannel(sigId,channelImpl)
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """
+
 function applyChannel(sigId,channelImpl)
+    
 	if !Bool(channelImpl.timeVarying)
 		# --- Classic convolution
 		return sigChan = conv(sigId,channelImpl.cir);
@@ -364,26 +366,34 @@ function applyChannel(sigId,channelImpl)
 		nbTaps	=size(channelImpl.cir,2);
 		nbOut	=length(sigId)+nbTaps
 		sigChan = zeros(Complex{Float64},nbOut)
-		# n is time index of output, δ is lag index
-		for n = 1 : 1 : length(sigId)
-			# --- At beginning, not possible to have all index
-			nbMaxTap  = min(n,nbTaps);
-			# --- Classic time domain convolution
-			for δ = 1 : 1 : nbMaxTap
-				sigChan[n] += channelImpl.cir[n,δ] * sigId[n-δ+1];
-			end
-		end
-		# At the end we have zero
+        timeVaryingConv!(sigChan, channelImpl.cir, sigId, nbTaps)
+
+        # At the end we have zero
 		buffEnd = zeros(Complex{Float64},nbTaps *2);
 		buffEnd[1:nbTaps] = sigChan[1:nbTaps];
-		for n = 1:nbTaps
-			# --- Classic time domain convolution
-			for δ = 1 : 1 : nbTaps
-				sigChan[length(sigId)+n] += channelImpl.cir[end,δ] * buffEnd[n+nbTaps-δ+1];
-			end
-		end
+        timeVaryingConvTail!(sigChan, channelImpl.cir, buffEnd, length(sigId), nbTaps)
+
 		return sigChan;
 	end
 end
 
+function timeVaryingConv!(sigChan, cir, sigId, nbTaps)
+    # n is time index of output, δ is lag index
+    for n = 1:length(sigId)
+        # --- At beginning, not possible to have all index
+        nbMaxTap = min(n,nbTaps);
+        # --- Classic time domain convolution
+        for δ = 1:nbMaxTap
+            @inbounds sigChan[n] += cir[n,δ] * sigId[n-δ+1];
+        end
+    end
+end
 
+function timeVaryingConvTail!(sigChan, cir, buffEnd, nbSigSamples, nbTaps) 
+    for n = 1:nbTaps
+        # --- Classic time domain convolution
+        for δ = 1 : 1 : nbTaps
+            @inbounds sigChan[nbSigSamples+n] += cir[end,δ] * buffEnd[n+nbTaps-δ+1];
+        end
+    end    
+end
