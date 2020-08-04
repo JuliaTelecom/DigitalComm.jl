@@ -17,7 +17,7 @@ The method uses IFFT approach described in [1]
 
 # --- 
 """
-function rayleighChan(nbPath,sizeFFT,fs,fd,randSeed=-1)
+function rayleighChan!(α, sizeFFT, fs, fd, randSeed=-1)
 	# ----------------------------------------------------
 	# --- Parameters init
 	# ----------------------------------------------------
@@ -25,8 +25,7 @@ function rayleighChan(nbPath,sizeFFT,fs,fd,randSeed=-1)
 	# Core number
 	#FFTW.set_num_threads(4);
 	# FFT size
-	# Forcing power of 2 for FFT computation
-	N	= nextpow(2,sizeFFT);
+	N = size(α,1)
 	# --- Compute normalized doppler frequency
 	normFd	= fd / fs;
 	# --- Deduce grid-based index associated to normFd
@@ -68,12 +67,18 @@ function rayleighChan(nbPath,sizeFFT,fs,fd,randSeed=-1)
 	end
 	# --- Creating random sequence
 	# We need to have unitary variance @output of system model
-	# /2 for I/Q equivalent power
 	# Σ | F[k] | ^2 -> Normalisation wrt doppler filter
-	variance  = sqrt(1/2/sum(abs2.(fM)));
-	seqPhase  = variance* randn(N,nbPath) .* fM;	  # --- In phase
-	seqQuad	  = variance* randn(N,nbPath) .* fM;	  # --- Quadrature
-	α 		  = sizeFFT * ifft(seqPhase + 1im* seqQuad,1);
-	# --- Creating random sequence
+	variance  = sqrt(1/sum(abs2, fM));
+	α[:] = variance .* randn!(α) .* fM;
+	α[:] = sizeFFT .* ifft!(α,1);
+end
+
+
+function rayleighChan(nbPath::Int,sizeFFT::Int,fs::AbstractFloat,fd::AbstractFloat,randSeed::Int=-1)
+	# FFT size
+	# Forcing power of 2 for FFT computation
+	N  = nextpow(2,sizeFFT);
+	α = Array{ComplexF64}(undef, N, nbPath)
+	rayleighChan!(α,sizeFFT,fs,fd,randSeed)
 	return α
 end

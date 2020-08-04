@@ -13,6 +13,7 @@ module DigitalComm
 using FFTW 
 using Statistics
 using DSP
+using LinearAlgebra
 
 # ---------------------------------------------------- 
 # --- Submodules inclusion  

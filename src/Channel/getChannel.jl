@@ -47,6 +47,7 @@ struct ChannelImpl
 	cir::Union{Array{Int},Array{Float64},Array{Complex{Float64}}}; # CIR matrix (nbTap x nbReal)
 	channelModel::ChannelModel;			  # Channel model baseline
 	powerLin::Array{Complex{Float64}};	  # Power distribution (with random rayleigh application)
+	raylAmpl::Array{Complex{Float64}};    # Complex rayleigh coefficient
 	randSeed::Int;						  # Used seed
 end
 
@@ -312,11 +313,11 @@ function getChannel(nbSamples::Int,channelModel::ChannelModel,randSeed=-1)
 			freq	  = channelModel.samplingFreq;
 			# --- Ensuring additional delay for proper interpolation
 			delay	  = channelModel.delayProfile .+ fdGap;
-            # --- Shannon interpolation with sinc. on sincSupport
-            shannonInterp = sinc.(pi.*(transpose(1:delaySpread+sS)./freq .- delay) .* freq);
-            # --- Each index is superimposition of all timed compondent
-            cir = transpose(powerLin) .* raylAmpl[1:nbSamples] * shannonInterp;
-			return ChannelImpl(1,cir,channelModel,powerLin,randSeed);
+			# --- Shannon interpolation with sinc. on sincSupport
+			powerLinInterp = powerLin .* sinc.(pi.*(transpose(1:delaySpread+sS)./freq .- delay) .* freq);
+			# --- Each index is superimposition of all timed compondent
+			cir = raylAmpl[1:nbSamples,:] * powerLinInterp;
+			return ChannelImpl(1,cir,channelModel,powerLinInterp,raylAmpl,randSeed);
 		else
 			# ----------------------------------------------------
 			# --- Constant FIR channel
@@ -351,7 +352,7 @@ sigChan	  : applyChannel(sigId,channelImpl)
 # v 1.0 - Robin Gerzaguet.
 """
 
-function applyChannel(sigId,channelImpl)
+function applyChannel!(sigChan,sigId,channelImpl)
     
 	if !Bool(channelImpl.timeVarying)
 		# --- Classic convolution
@@ -365,14 +366,26 @@ function applyChannel(sigId,channelImpl)
 		# Init outut vector: Output is a convolution
 		nbTaps	=size(channelImpl.cir,2);
 		nbOut	=length(sigId)+nbTaps
-		sigChan = zeros(Complex{Float64},nbOut)
-        timeVaryingConv!(sigChan, channelImpl.cir, sigId, nbTaps)
+		timeVaryingConv!(sigChan, channelImpl.cir, sigId, nbTaps)
 
-        # At the end we have zero
+		# At the end we have zero
 		buffEnd = zeros(Complex{Float64},nbTaps *2);
 		buffEnd[1:nbTaps] = sigChan[1:nbTaps];
-        timeVaryingConvTail!(sigChan, channelImpl.cir, buffEnd, length(sigId), nbTaps)
+		timeVaryingConvTail!(sigChan, channelImpl.cir, buffEnd, length(sigId), nbTaps)
+	end
+end
 
+function applyChannel(sigId,channelImpl)
+
+	if !Bool(channelImpl.timeVarying)
+		# --- Classic convolution
+		return sigChan = conv(sigId,channelImpl.cir);
+	else
+		# Init outut vector: Output is a convolution
+		nbTaps	=size(channelImpl.cir,2);
+		nbOut	=length(sigId)+nbTaps
+		sigChan = zeros(Complex{Float64},nbOut)
+		applyChannel!(sigChan,sigId,channelImpl)
 		return sigChan;
 	end
 end
@@ -396,4 +409,16 @@ function timeVaryingConvTail!(sigChan, cir, buffEnd, nbSigSamples, nbTaps)
             @inbounds sigChan[nbSigSamples+n] += cir[end,δ] * buffEnd[n+nbTaps-δ+1];
         end
     end    
+end
+
+
+function renewChannel!(channelImpl::ChannelImpl, channelModel::ChannelModel, randSeed::Int)
+	if channelModel.speed != 0 && channelModel.dopplerFreq != 0
+		nbSamples = size(channelImpl.cir,1)
+		nbTaps	  = length(channelModel.powerProfile);
+		rayleighChan!(channelImpl.raylAmpl,nbSamples,channelModel.samplingFreq,channelModel.dopplerFreq,randSeed);
+		mul!(channelImpl.cir, channelImpl.raylAmpl[1:nbSamples,:], channelImpl.powerLin)
+	else
+		error("\"renewChannel!\" is available when the channel is time-varying.")
+	end
 end
