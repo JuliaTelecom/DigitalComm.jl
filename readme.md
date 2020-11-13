@@ -4,7 +4,7 @@
 
 # DigitalCom.jl 
 
-[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://rgerzaguet.github.io/DigitalComm.jl/dev/index.html)
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://juliatelecom.github.io/DigitalComm.jl/dev/index.html)
 
 ## Purpose 
 
