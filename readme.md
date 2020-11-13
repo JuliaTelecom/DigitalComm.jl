@@ -41,4 +41,4 @@ julia> import Pkg; Pkg.add("DigitalComm")
 
 ## Documentation
 
-- [**STABLE**](https://rgerzaguet.github.io/DigitalComm.jl/dev/index.html) &mdash; **documentation of the most recently tagged version.**
+- [**STABLE**](https://juliatelecom.github.io/DigitalComm.jl/dev/index.html) &mdash; **documentation of the most recently tagged version.**
