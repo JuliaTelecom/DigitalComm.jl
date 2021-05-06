@@ -17,8 +17,6 @@ Quadrature Amplitude Modulation (QAM) function
 - bitSeq	: Binary sequence to be transformed into QPSK symbols [Array{UInt8}]
 # --- Output parameters 
 - []
-# --- 
-# v 1.0 - Robin Gerzaguet.
 """
 function bitMappingQAM!(qamMat,M, bitSeq)
 	# ----------------------------------------------------
@@ -166,8 +164,27 @@ function bitMappingQAM!(qamMat,M, bitSeq)
 end
 
 # ---------------------------------------------------- 
-# --- No allocation function  
+# --- Allocating function
 # ---------------------------------------------------- 
+""" 
+---  
+Quadrature Amplitude Modulation (QAM) function
+   Apply symbol mapping to a input binary sequence (of size 1xL) with constellation size M.
+	Output is a vector (1xN) with N = L / log2(M)
+	Conventional gray mapping is used. Output constellation is casted in float, with unitary average power
+ Supported constellation
+* QPSK
+* 16-QAM
+* 64-QAM
+* 256-QAM
+# --- Syntax 
+qamMat =  bitMappingQAM(M,bitSeq)
+# --- Input parameters 
+- M			: Modulation size (i.e from 4 to 256) such as bit per symbol is log2(M) [Int]
+- bitSeq	: Binary sequence to be transformed into QPSK symbols [Array{UInt8}]
+# --- Output parameters 
+- qamMat	: Complex Vector to populate of size length(bitSeq) / log2(M) [Array{Complex{Float64}}]
+"""
 function bitMappingQAM(M,bitSeq)
 	nbBits	= length(bitSeq);
 	nbSymb	= Int( nbBits ÷ log2(M)); 

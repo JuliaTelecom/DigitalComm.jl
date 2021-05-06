@@ -12,7 +12,7 @@ using Random
 
 """
 ---  
-Create a binary sequence and populate input buffer with nbBits bits
+Create a binary sequence and populate input buffer with bits
 The array is of type UInt8 with x00 or x01)
 If stated, randSeed controls the seed of the random generator
 # --- Syntax 
@@ -20,13 +20,11 @@ If stated, randSeed controls the seed of the random generator
 # --- Input parameters 
 - buffer	: Buffer to populate [Array{UInt8,nbBits}]
 - nbBits	: Number of bits to generate [Int]
-- randSeed	: Seed of random process (default -> -1)
+- randSeed	: Seed of random process (default -> -1, no seed is used)
 # --- Output parameters 
 - buffer	: Populated buffer [Array{UInt8}]
-# --- 
-# v 1.0 - Robin Gerzaguet.
 """
-function genBitSequence!(buffer::Array{UInt8},nbBits,randSeed=-1)
+function genBitSequence!(buffer::Array{UInt8},randSeed=-1)
 	# --- Setting the random seed if given
 	if randSeed != -1
 		# --- Seed as the second parameter
@@ -47,14 +45,12 @@ Create a binary sequence and return a buffer with nbBits bits
 The array is of type UInt8 with x00 or x01)
 If stated, randSeed controls the seed of the random generator
 # --- Syntax 
-	  genBitsequence!(nbBits,randSeed=-1);
+	  genBitsequence(nbBits,randSeed=-1);
 # --- Input parameters 
 - nbBits	: Number of bits to generate [Int]
 - randSeed	: Seed of random process (default -> -1) [Int]
 # --- Output parameters 
 - buffer	: Populated buffer [Array{UInt8}]
-# --- 
-# v 1.0 - Robin Gerzaguet.
 """
 function genBitSequence(nbBits,randSeed=-1)
 	# --- Setting the random seed if given
@@ -65,7 +61,7 @@ function genBitSequence(nbBits,randSeed=-1)
 	# --- Create the input buffer 
 	buffer	= zeros(UInt8,nbBits);
 	# --- Call the bang method 
-	genBitSequence!(buffer,nbBits,randSeed);
+	genBitSequence!(buffer,randSeed);
 	# --- Return the buffer 
 	return buffer;
 end
@@ -81,14 +77,13 @@ If stated, randSeed controls the seed of the random generator
 	  genByteSequence!(buffer,nbBytes,randSeed=-1);
 # --- Input parameters 
 - buffer	: Buffer to populate [Array{UInt8,nbByte}]
-- nbBytes	: Number of byte to generate [Int]
 - randSeed	: Seed of random process (default -> -1)
 # --- Output parameters 
 - buffer	: Populated buffer [Array{UInt8}]
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """
-function genByteSequence!(buffer::Array{UInt8},nbBytes,randSeed=-1)
+function genByteSequence!(buffer::Array{UInt8},randSeed=-1)
 	# --- Setting the random seed if given
 	if randSeed != -1
 		# --- Seed as the second parameter
@@ -97,7 +92,6 @@ function genByteSequence!(buffer::Array{UInt8},nbBytes,randSeed=-1)
 	# --- Generating byte sequence
 	Random.rand!(buffer, 0x00:0x01:0xff);
 	# --- Switch to "pure" random system
-	RandomDevice();
 	if randSeed != -1
 		RandomDevice();
 	end
@@ -123,7 +117,7 @@ function genByteSequence(nbBytes,randSeed=-1)
 	# --- Create buffer 
 	buffer = zeros(UInt8,nbBytes); 
 	# --- Call ! 
-	genByteSequence!(buffer,nbBytes,randSeed);
+	genByteSequence!(buffer,randSeed);
 end
 
 

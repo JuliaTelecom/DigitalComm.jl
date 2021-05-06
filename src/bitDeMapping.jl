@@ -14,8 +14,6 @@ Output bitsream is Array{Int8}
 - qamVect	: Complex observation vector to decode.
 # --- Output parameters 
 - []
-# --- 
-# v 1.0 - Robin Gerzaguet.
 """
 function bitDemappingQAM!(hardBits,M, qamVect)
 	# ----------------------------------------------------
@@ -376,7 +374,22 @@ function bitDemappingQAM!(hardBits,M, qamVect)
 end
 
 
-
+""" 
+---  
+Quadrature Amplitude Modulation (QAM) hard decoding function
+Apply symbol hard demapping to a input symbol sequence (of size 1xN) with constellation size M.
+Output is a binary (1xL) with N = L / log2(M)
+Conventional gray demapping is used.
+Input constellation is Array{Complex{Float64}}
+Output bitsream is Array{Int8}
+# --- Syntax 
+hardBits = 	 bitDemappingQAM!(hardBits,M,qamVect)
+# --- Input parameters 
+- M			: Constellation size (i.e from 4 to 256)
+- qamVect	: Complex observation vector to decode.
+# --- Output parameters 
+- hardBits	: Vector of bits to populate [Array{UInt8}, length(qamVect)/log2(M)]
+""" 
 function bitDemappingQAM(M,qamVect);
 	# --- Create receive bit vector 
 	hardBits = zeros(UInt8, Int(length(qamVect)*log2(M))); 

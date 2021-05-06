@@ -20,7 +20,7 @@ println("Tests for binary sequence generation");
 	@test unique(bitSeq) == [0x00,0x01] || unique(bitSeq) == [0x01,0x00] ;
 	# --- Checking bang method 
 	bitSeq2	= zeros(UInt8,N); 
-	genBitSequence!(bitSeq2,N,rSeed); 
+	genBitSequence!(bitSeq2,rSeed); 
 	# --- Ensure that output is a UInt8 vector 
 	@test typeof(bitSeq2) == Array{UInt8,1}; 
 	# --- Checking 0 and 1 populate the buffer 
@@ -42,11 +42,11 @@ end
 	@test typeof(byteSeq) == Array{UInt8,1}; 
 	# --- Checking bang method 
 	byteSeq2	= zeros(UInt8,N); 
-	genByteSequence!(byteSeq2,N,rSeed); 
+	genByteSequence!(byteSeq2,rSeed); 
 	# --- Ensure that output is a UInt8 vector 
 	@test typeof(byteSeq2) == Array{UInt8,1}; 
 	# --- Seed should have generated same vector for both call 
 	@test (byteSeq == byteSeq2)
-	# --- Forcing a random seed and check taht vector is different 
+	# --- Forcing a random seed and check that vector is different 
 	@test (genByteSequence(N) != byteSeq)
 end

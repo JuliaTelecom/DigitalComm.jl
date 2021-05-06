@@ -69,15 +69,13 @@ Returns the log likelihood ratio of the incoming sequence qamSeq based on the ch
 qamSeq is an input noisy QAM sequence with same size of channel estimate vector
 Output is a vector of soft output binary sequence to be fed in a FEC 
 # --- Syntax 
- output	  = :symbolDemappingQAM(mcs,qamSeq,channel)
+ output	  = symbolDemappingQAM(mcs,qamSeq,channel)
 # --- Input parameters 
 - mcs	  : Constellation size (from 4 to 256) [Int]
 - qamSeq  : Complex noisy received sequence (after equalization) [Array{Float64},N]
 - channel : Complex channel estimate [Array{Float64},N]
 # --- Output parameters 
 - output  : Soft bits [Array{UInt8},N*log2(mcs)]
-# --- 
-# v 1.0 - Robin Gerzaguet.
 """
 function symbolDemappingQAM(mcs,qamSeq,channel)
 	# --- Creating output array for allocation 
