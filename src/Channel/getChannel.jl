@@ -91,8 +91,10 @@ function initChannel(profile::String,carrierFreq::Union{Int,Float64},samplingFre
 		# In this case, the profile is direclty inherited from powerProfile and delayProfile array
 		# --- Calculating doppler frequency
 		dopplerFreq	  = speed * 1e3 / 3600 * carrierFreq / 3e8;
+        # --- Estimating delay profile 
+        delaySpread = Int( ceil( maximum(delayProfile) * samplingFreq))
 		# --- Creating object
-		return ChannelModel("multipath",carrierFreq,samplingFreq,speed,powerProfile,delayProfile,dopplerFreq,maximum(delayProfile));
+		return ChannelModel("multipath",carrierFreq,samplingFreq,speed,powerProfile,delayProfile,dopplerFreq,delaySpread);
 	elseif profile == "none" || profile == "awgn"
 		# ----------------------------------------------------
 		# --- AWGN channel model
