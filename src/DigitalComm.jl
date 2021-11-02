@@ -53,6 +53,11 @@ include("Channel/addCFO.jl")
 export addCFO
 export addCFO!
 
+# --- Raised cosine filters
+include("raisedCosine.jl")
+export raisedCosine
+export sqrtRaisedCosine
+
 
 # ---------------------------------------------------- 
 # --- Function definition  

@@ -18,9 +18,11 @@ include("test_hardConstellation.jl");
 # Symbol demapper 
 include("test_symbolDemapper.jl");
 
-
 # AWGN 
 include("test_addNoise.jl");
 
 # Test Waveforms 
 include("test_waveforms.jl");
+
+# Test filters 
+include("test_filters.jl")
