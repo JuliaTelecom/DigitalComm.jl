@@ -49,7 +49,9 @@ export initChannel
 export getChannel 
 export getFIRResponse
 export applyChannel 
-
+include("Channel/addCFO.jl")
+export addCFO
+export addCFO!
 
 
 # ---------------------------------------------------- 
