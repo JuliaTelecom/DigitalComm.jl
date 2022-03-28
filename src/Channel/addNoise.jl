@@ -10,6 +10,8 @@ output parameters are the signal with noise, and the noise samples
 See the bang methods for non-buffer alloc.
 # --- Syntax 
 [y,n]   = addNoise(x,snr,powSig);
+addNoise!(y,x,powSig)
+addNoise!(x,powSig)
 # --- Input parameters 
 - x= Input signal [Array{Real{Float64}}, Array{Complex{Float64}}] of size N
 - snr= Desired signal to noise ratio [Float64]
@@ -47,4 +49,21 @@ function addNoise!(y::Array{T},x::Array{T},snr::Any,powSig=0.0) where T
 	powNoise  = sqrt(powSig) * 10^(-snr/20);
 	# --- Create a complex random sequence as additive noise
 	y  .= x .+ randn!(y) .* powNoise;
+end
+
+
+function addNoise!(x::Array{T},snr::Number,powSig=0.0) where T
+	# --- If powSig is equal to 0, power is computed with x input
+	# Expectation is taken with respect to time
+	if powSig == 0.0
+		powSig  = sum(abs2.(x)) / length(x);
+	end
+	# --- Evaluation of noise power
+	# Additional /sqrt(2) to divide power between I and Q paths
+	# No sqrt(2)--> Complex randn is unitary variance in complex plan
+	powNoise  = sqrt(powSig) * 10^(-snr/20);
+	# --- Create a complex random sequence as additive noise
+    @inbounds @simd for n in eachindex(x)
+        x[n] += randn(T) * powNoise
+    end
 end

@@ -32,6 +32,12 @@ println("Tests for noise addition");
 	addNoise!(mem,qamSeq,snrVise);
 	snr		= -10*log10(mean(abs2.(qamSeq .- mem)));
 	@test abs2(snr - snrVise) < 0.1
+    # Testing band with replace works 
+    snrVise = 15 
+    qamBackUp = copy(qamSeq)
+    addNoise!(qamBackUp,snrVise)
+	snr		= -10*log10(mean(abs2.(qamSeq .- qamBackUp)));
+	@test abs2(snr - snrVise) < 0.1
 end 
 
 @testset "Testing addCFO.jl..." begin 
