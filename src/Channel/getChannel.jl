@@ -352,7 +352,6 @@ sigChan	  : applyChannel(sigId,channelImpl)
 # --- 
 # v 1.0 - Robin Gerzaguet.
 """
-
 function applyChannel(sigId,channelImpl)
     
 	if !Bool(channelImpl.timeVarying)
