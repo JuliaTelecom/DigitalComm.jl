@@ -111,3 +111,29 @@ for  (name,struc) in waveforms
 	end
 end
 
+
+
+@testset "OVSF CDMA " begin 
+    # Testing OVSF code 
+    for N = [4,8,16,64]
+        c = ovsf(N)
+        for cn ∈ 1 : N
+            for ck ∈ 1 : N 
+                # --- Code correlation 
+                γ = sum(c[cn,:] .* conj(c[ck,:]) )
+                if cn == ck 
+                    # Autocorrelation 
+                    @test γ == N 
+                else 
+                    # Zero correlation 
+                    @test γ == 0
+                end
+            end
+        end
+    end
+end
+
+
+@testset "CDMA generator" begin 
+
+end
