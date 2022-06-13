@@ -39,7 +39,7 @@ function ufofdmSigDecode(sigRx,nFFT,L,allocatedSubcarriers;sizeRB=12,window=0)
 		subSig	  = sigRx[ 1+(iB-1)*sizeSymb:iB*sizeSymb ];
 		# --- Apodisation
 		if window != 0
-			subSig	= subSig .* filterTimeDomain;
+			subSig	= subSig .* window
 		end
 		# --- Zero Padding to get a 2nFFT
 		sigZP	  = [subSig;zeros(Complex{Float64},nFFT-L+1)];

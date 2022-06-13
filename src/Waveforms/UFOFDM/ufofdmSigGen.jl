@@ -217,7 +217,7 @@ function calcPDCoefficients(filterTaps,nFFT,sizeRB,allocatedSubcarriers,applyPD)
 		chestPD		  = sigPD[allocatedSubcarriers];
 	else
 		# --- No predistortion filter
-		chestPD		  = ones(Int,nbDataSubcarrier);
+		chestPD		  = ones(Int,length(allocatedSubcarriers));
 	end
 	return chestPD
 end
