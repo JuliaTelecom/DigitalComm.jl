@@ -135,5 +135,35 @@ end
 
 
 @testset "CDMA generator" begin 
-
+    N = 16
+    C = ovsf(N)
+    # --- Spreading
+    for n ∈ 1 : N 
+        c = C[:,n]
+        # Check spreading with one as input, we should obtain the code 
+        in = [1]
+        out = zeros(16)
+        DigitalComm._spread_accum!(out,in,c,N)
+        @test all(out .== c)
+        # Check that accumulation is Ok 
+        DigitalComm._spread_accum!(out,in,c,N)
+        @test all(out .== 2 .*c)
+    end
+    # --- True generator 
+    nS = 100
+    qamMat = ones(nS,N)
+    sigId = cdmaSigGen(qamMat,N,:ovsf)
+    @test sigId isa Vector 
+    @test length(sigId) == nS * N
+    for n = 1 : 1 : N
+        @test sigId[n] == sum(C[n,:])
+    end
+    # --- Generate only user 8
+    qamMat = ones(nS,1)
+    sigId = cdmaSigGen(qamMat,N,:ovsf,[8])
+    @test sigId isa Vector 
+    @test length(sigId) == nS * N
+    for n = 1 : 1 : N
+        @test sigId[n] == C[n,8]
+    end
 end
