@@ -73,12 +73,12 @@ function cdmaSigGen(qamMat::AbstractMatrix{T},nbUsers::Number,code::Symbol,userM
 return sigOut
 end
     
-""" Apply a sreaping of input signal `seq` using `code` and accumulate the result in `tmp`
+""" Apply a spreading of input signal `seq` using `code` and accumulate the result in `tmp`
 """
 function _spread_accum!(tmp,seq,code,sF)
     @inbounds @simd for n ∈ eachindex(seq)
         for k ∈ 1 : sF 
-            tmp[(n-1)*sF + k] += seq[n] .* code[sF]
+            tmp[(n-1)*sF + k] += seq[n] * code[k]
         end
     end
 end
