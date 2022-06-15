@@ -151,7 +151,7 @@ end
     end
     # --- True generator 
     nS = 100
-    qamMat = ones(nS,N)
+    qamMat = ones(N,nS)
     sigId = cdmaSigGen(qamMat,N,:ovsf)
     @test sigId isa Vector 
     @test length(sigId) == nS * N
@@ -159,7 +159,7 @@ end
         @test sigId[n] == sum(C[n,:])
     end
     # --- Generate only user 8
-    qamMat = ones(nS,1)
+    qamMat = ones(1,nS) # Equivalent to a one subcarrier OFDM system
     sigId = cdmaSigGen(qamMat,N,:ovsf,[8])
     @test sigId isa Vector 
     @test length(sigId) == nS * N
@@ -178,7 +178,7 @@ end
     bitSeq	      = genBitSequence(nS);
     qamSeq		  = bitMappingQAM(mcs,bitSeq);
     # --- T/F matrix
-    qamMat		  = reshape(qamSeq,nbSymb,N);
+    qamMat		  = reshape(qamSeq,N,nbSymb);
     sigId = cdmaSigGen(qamMat,N,:ovsf)
     # Testing global decoding method
     qamRx = cdmaSigDecode(sigId,N,:ovsf,1:N)
@@ -186,6 +186,6 @@ end
     # Testing one user decoding 
     for n = 1 : 1 : N 
         qamRx = cdmaSigDecode(sigId,N,:ovsf,[n])
-        @test all(qamRx .≈ qamMat[:,n])
+        @test all(qamRx[1,:] .≈ qamMat[n,:])
     end
 end

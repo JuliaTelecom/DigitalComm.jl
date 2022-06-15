@@ -18,7 +18,7 @@ bitSeq	      = genBitSequence(nbBits)
 qamSeq		  = bitMappingQAM(mcs,bitSeq);
 nbSymb        = length(qamSeq) ÷ nbActiveUsers
 # --- T/F matrix
-qamMat		  = reshape(qamSeq,nbSymb,nbActiveUsers);
+qamMat		  = reshape(qamSeq,nbActiveUsers,nbSymb);
 # --- Signal
 sigId		  = cdmaSigGen(qamMat,nbUsers,:ovsf)
 

@@ -6,6 +6,7 @@ Input
 - initState : Initial state value (default 1)
 Output
 - codes : Matrix of size code_size x N with type UInt8
+[1] Yuh-Shyan Chen and Ting-Lung Lin, "Code placement and replacement schemes for WCDMA Rotated-OVSF code tree management," in IEEE Transactions on Mobile Computing, vol. 5, no. 3, pp. 224-239, March 2006, doi: 10.1109/TMC.2006.30.
 """
 function ovsf(N,initState::Int8=Int8(1))
     n = Int(log2(N))
@@ -32,7 +33,7 @@ end
 """ Generates a Code Division Multiplexing Access signal from a Symbol matrix `qamMat` and using code family `code`. \\
 cdmaSigGen(qamMat::AbstractMatrix{T},nbUsers::Number,code::Symbol,userMask=nothing) \\
 Input parameters 
-- qamMat : Matrix of symbols of size nbSymb x nbActiveUser. Each column corresponds to a user stream and there is at least nbActiveUser. nbActiveUser should be ≤ than the number of code we have 
+- qamMat : Matrix of symbols of size nbActiveUser x nbSymb. Each line corresponds to a user stream and there is at least nbActiveUser colunm. nbActiveUser should be ≤ than the number of code we have 
 - nbUsers : Maximal number of user that can be multiplexed. Used for code generation 
 - code : Type of code used as a Symbol. We support `:ovsf`
 - userMask: Optional parameter, a vector of the code used. Should be of size nbActiveUser. For example, if we have 16 max users but we only want to encode 1000 symbols for  user 2 and user 12, we should call `cdmaSigGen` with a matrix `qamMat` of size (1000,2), `nbUsers` = 16 and `userMask` = [2;12]
@@ -47,12 +48,12 @@ function cdmaSigGen!(sigOut::AbstractVector,qamMat::AbstractMatrix{T},nbUsers::N
     else 
         @error "Code $code is unsupported. We currently inly support OVSF"
     end
-    nbActiveUser = size(qamMat,2)
-    nbSymb       = size(qamMat,1)
+    nbActiveUser = size(qamMat,1)
+    nbSymb       = size(qamMat,2)
     # Check we can encode users (more codes than uers)
     @assert nbActiveUser ≤ nbUsers "Number of active users ($nbActiveUser) should be lower than the code size ($nbUsers)."
     # Check output is of enough size 
-    @assert length(sigOut) == nbUsers * size(qamMat,1) "Size of output vector ($(length(sigOut)) does not match input size x code size ($(nbSymb)x$(nbUsers)= $(nbUsers*size(qamMat,1)))"
+    @assert length(sigOut) == nbUsers * nbSymb "Size of output vector ($(length(sigOut)) does not match input size x code size ($(nbSymb)x$(nbUsers)= $(nbUsers*nbSymb))"
     # Code selection
     if isnothing(userMask) 
         # We use the first codes as codeset
@@ -63,12 +64,12 @@ function cdmaSigGen!(sigOut::AbstractVector,qamMat::AbstractMatrix{T},nbUsers::N
     # ---------------------------------------------------- 
     for n = 1 : 1 : nbActiveUser
         # Apply the spreading and accumulate
-        _spread_accum!(sigOut,qamMat[:,n],c[:,userMask[n]],nbUsers)
+        _spread_accum!(sigOut,qamMat[n,:],c[:,userMask[n]],nbUsers)
     end
     return sigOut
 end
 function cdmaSigGen(qamMat::AbstractMatrix{T},nbUsers::Number,code::Symbol,userMask=nothing) where T
-    sigOut  = zeros(T,size(qamMat,1)*nbUsers)
+    sigOut  = zeros(T,size(qamMat,2)*nbUsers)
     cdmaSigGen!(sigOut,qamMat,nbUsers,code,userMask)
 return sigOut
 end
