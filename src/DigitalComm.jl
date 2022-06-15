@@ -226,10 +226,13 @@ export oqamDemapping
 export fbmcSigDecode
 
 # CDMA Generation 
-include("./Waveforms/CDMA/CDMASigGen.jl")
+include("./Waveforms/CDMA/cdmaSigGen.jl")
 export ovsf 
 export cdmaSigGen
 export cdmaSigGen!
+include("./Waveforms/CDMA/cdmaSigDecode.jl")
+export cdmaSigDecode
+
 
 # --- Global waveform alias
 include("./Waveforms/genSig.jl");

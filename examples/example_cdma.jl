@@ -21,3 +21,22 @@ nbSymb        = length(qamSeq) ÷ nbActiveUsers
 qamMat		  = reshape(qamSeq,nbSymb,nbActiveUsers);
 # --- Signal
 sigId		  = cdmaSigGen(qamMat,nbUsers,:ovsf)
+
+
+# ----------------------------------------------------
+# --- Ideal decoding
+# ---------------------------------------------------- 
+# --- Decoding 
+qamRx = cdmaSigDecode(sigId,nbUsers,:ovsf,1:nbActiveUsers)
+sir = getSIR(qamRx,qamMat)
+println("SIR between Tx and Rx sequence (no noise) is $sir dB")
+
+
+# ----------------------------------------------------
+# --- Decoding with noise
+# ---------------------------------------------------- 
+snr = 30 
+sigRx,_ = addNoise(sigId,snr)
+qamRx = cdmaSigDecode(sigRx,nbUsers,:ovsf,1:nbActiveUsers)
+sir = getSIR(qamRx,qamMat)
+println("SIR between Tx and Rx sequence ($snr dB additive  noise) is $sir dB")

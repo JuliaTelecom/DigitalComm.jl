@@ -167,3 +167,25 @@ end
         @test sigId[n] == C[n,8]
     end
 end
+
+
+@testset "CDMA receiver" begin 
+    nS = 32768
+    N  = 16 
+    mcs = 4
+    nbSymb = nS ÷ N ÷ Int(log2(mcs))
+   # Mapping
+    bitSeq	      = genBitSequence(nS);
+    qamSeq		  = bitMappingQAM(mcs,bitSeq);
+    # --- T/F matrix
+    qamMat		  = reshape(qamSeq,nbSymb,N);
+    sigId = cdmaSigGen(qamMat,N,:ovsf)
+    # Testing global decoding method
+    qamRx = cdmaSigDecode(sigId,N,:ovsf,1:N)
+    @test all(qamRx .≈ qamMat)
+    # Testing one user decoding 
+    for n = 1 : 1 : N 
+        qamRx = cdmaSigDecode(sigId,N,:ovsf,[n])
+        @test all(qamRx .≈ qamMat[:,n])
+    end
+end
