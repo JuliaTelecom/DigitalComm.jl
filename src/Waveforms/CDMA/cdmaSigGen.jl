@@ -7,7 +7,7 @@ end
 
 """ Instantiate a CDMA structure with a code of size `nbUsers`of type `code`(e.g :ovsf) and active for the user defined in `userMask`
 """
-function initCDMA(nbUsers::Number,code::Symbol,userMask::AbstractVector=nothing)
+function initCDMA(nbUsers::Number,code::Symbol,userMask::Union{Nothing,AbstractVector}=nothing)
     isnothing(userMask) && (userMask=1:nbUsers) 
     @assert length(userMask) ≤ nbUsers "Number of users should ($(length(nbActiveUser))) be ≤ to the code size ($nbUsers)"
     return StrucCDMA(nbUsers,code,userMask)
