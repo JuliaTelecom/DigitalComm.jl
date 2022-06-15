@@ -166,6 +166,12 @@ end
     for n = 1 : 1 : N
         @test sigId[n] == C[n,8]
     end
+    # Testing with struct 
+    cdma = initCDMA(N,:ovsf,[8])
+    @test cdma isa Waveform 
+    @test cdma isa DigitalComm.StrucCDMA
+    sigId2 = cdmaSigGen(qamMat,cdma)
+    @test all(sigId2 .≈ sigId)
 end
 
 
@@ -188,4 +194,11 @@ end
         qamRx = cdmaSigDecode(sigId,N,:ovsf,[n])
         @test all(qamRx[1,:] .≈ qamMat[n,:])
     end
+    # Testing with struct 
+    cdma = initCDMA(N,:ovsf,[8])
+    @test cdma isa Waveform 
+    @test cdma isa DigitalComm.StrucCDMA
+    qamRx0 = cdmaSigDecode(sigId,N,:ovsf,[8])
+    qamRx1 = cdmaSigDecode(sigId,cdma)
+    @test all(qamRx0 .≈ qamRx1)
 end

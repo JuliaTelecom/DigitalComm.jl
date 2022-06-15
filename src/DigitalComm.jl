@@ -227,6 +227,7 @@ export fbmcSigDecode
 
 # CDMA Generation 
 include("./Waveforms/CDMA/cdmaSigGen.jl")
+export initCDMA
 export ovsf 
 export cdmaSigGen
 export cdmaSigGen!

@@ -1,3 +1,18 @@
+struct StrucCDMA <: Waveform
+    nbUsers::Int       # Number of user 
+    code::Symbol # DSSS code 
+    userMask::Vector{Int} 
+end
+
+
+""" Instantiate a CDMA structure with a code of size `nbUsers`of type `code`(e.g :ovsf) and active for the user defined in `userMask`
+"""
+function initCDMA(nbUsers::Number,code::Symbol,userMask::AbstractVector=nothing)
+    isnothing(userMask) && (userMask=1:nbUsers) 
+    @assert length(userMask) ≤ nbUsers "Number of users should ($(length(nbActiveUser))) be ≤ to the code size ($nbUsers)"
+    return StrucCDMA(nbUsers,code,userMask)
+end
+
 """ Orthogonal Variable Spreading Factor (OVSF) code generation
 It generates N codes that are orthogonal and follows the OVSF code pattern 
 codes = ovsf(N,initState::UInt8=1) \\
@@ -83,4 +98,9 @@ function _spread_accum!(tmp,seq,code,sF)
         end
     end
 end
+
+
+# Dispatch with StrucCDMA structure 
+cdmaSigGen(qamMat::AbstractMatrix,cdma::StrucCDMA) = cdmaSigGen(qamMat,cdma.nbUsers,cdma.code,cdma.userMask)
+cdmaSigGen!(sigOut::AbstractVector,qamMat::AbstractMatrix,cdma::StrucCDMA) = cdmaSigGen!(sigOut,qamMat,cdma.N,cdma.code,cdma.userMask)
 
