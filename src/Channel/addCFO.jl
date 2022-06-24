@@ -11,13 +11,13 @@ y = addCFO(x,delta,samplingRate)
 # --- Output parameters 
 - y : Signal with CFO
 """ 
-function addCFO(x::Union{AbstractVector{Complex{T}},AbstractVector{T}},δ,samplingRate,ϕ=0) where T
+function addCFO(x::Union{AbstractVector{Complex{T}},AbstractVector{T}},δ,samplingRate,ϕ=0) where {T<:Real}
     y = zeros(Complex{T},length(x))
     addCFO!(y,x,δ,samplingRate,ϕ)
     return y
 end
 
-function addCFO!(y::AbstractVector{Complex{T}},x::AbstractVector,δ::Number,samplingRate::Number,ϕ=0) where T
+function addCFO!(y::AbstractVector{Complex{T}},x::AbstractVector,δ::Number,samplingRate::Number,ϕ=0) where {T<:Real}
     # --- Basic array check 
     @assert length(x) == length(y) "Input and output should have same length (here input x is $(length(x)) and pre-allocated output has size $(length(y))"
     # --- CFO pulsation 
