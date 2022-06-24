@@ -3,4 +3,5 @@
 *.jl.mem
 *.aux
 *.log
+Manifest.toml
 docs/build/
