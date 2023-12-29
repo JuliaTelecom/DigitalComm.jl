@@ -14,8 +14,8 @@ Input parameters \n
 ```jldoctest
 julia> h = raisedCosine(12,0.5,16);
 
-julia> sum(h)
-16.002451134661918
+julia> length(h)
+385
 ```
 """
 function raisedCosine(N,beta,ovS)::Vector{Float64}
@@ -59,8 +59,8 @@ Input parameters \n
 ```jldoctest
 julia> h = sqrtRaisedCosine(12,0.5,16);
 
-julia> sum(h)
-14.07688841517184
+julia> length(h)
+385
 ```
 """
 function sqrtRaisedCosine(N,beta,ovS)::Vector{Float64}

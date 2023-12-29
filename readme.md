@@ -2,7 +2,7 @@
   <img src="docs/src/assets/logo.png" alt="Makie.jl" width="380">
 </div>
 
-# DigitalCom.jl
+# DigitalComm.jl
 
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://juliatelecom.github.io/DigitalComm.jl/dev/index.html)
 [![Run tests](https://github.com/JuliaTelecom/DigitalComm.jl/actions/workflows/test.yml/badge.svg)](https://github.com/JuliaTelecom/DigitalComm.jl/actions/workflows/test.yml)
