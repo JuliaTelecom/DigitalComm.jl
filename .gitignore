@@ -5,3 +5,5 @@
 *.log
 Manifest.toml
 docs/build/
+
+*.vscode/

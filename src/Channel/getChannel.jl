@@ -11,7 +11,7 @@ Channel model object
 - samplingFreq	  : Sampling frequency [Union{Int,Float64}]
 - speed			  : Desired speed (km/h) [Union{Int,Float64}]
 - powerProfile	  : Distribution of power values in dB [Array{Float64}]
-- delayProfile	  : Distribution of delay values in s [Array{Float64}] (same size as powerProfile) 
+- delayProfile	  : Distribution of delay values in s [Array{Float64}], same size as powerProfile
 - dopplerFreq	  : Doppler frequency (inherited from samplingFreq  and speed) 
 - delaySpread	  : Max support of CIR in samples [Int]
 # --- 
