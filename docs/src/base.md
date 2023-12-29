@@ -1,10 +1,9 @@
-## Common functions 
+## Common functions
 
 ```@autodocs
 Modules = [DigitalComm]
 Pages   = ["DigitalComm.jl"]
 Order   = [:function, :type]
-Depth   = 1
 ```
 
 ## Quadrature Amplitude Modulation
@@ -13,7 +12,6 @@ Depth   = 1
 Modules = [DigitalComm]
 Pages   = ["genBitSequence.jl","bitMapping.jl","bitDeMapping.jl","hardConstellation.jl","symbolDemapper.jl"]
 Order   = [:function, :type]
-Depth   = 1
 ```
 
 ## Channels
@@ -22,7 +20,6 @@ Depth   = 1
 Modules = [DigitalComm]
 Pages   = ["Channel/addNoise.jl","Channel/rayleighChan.jl","Channel/getChannel.jl"]
 Order   = [:function, :type]
-Depth   = 1
 ```
 
 # Waveforms
@@ -33,7 +30,6 @@ Depth   = 1
 Modules = [DigitalComm]
 Pages   = ["genSig.jl","genZCSequence.jl","getLTEAlloc.jl"]
 Order   = [:function, :type]
-Depth   = 0
 ```
 
 ## BF-OFDM
@@ -42,7 +38,6 @@ Depth   = 0
 Modules = [DigitalComm]
 Pages   = ["Waveforms/BFOFDM/BFOFDM_filter.jl","Waveforms/BFOFDM/bfofdmSigGen.jl","Waveforms/BFOFDM/bfofdmSigDecode.jl","Waveforms/BFOFDM/carrierManipulation.jl"]
 Order   = [:function, :type]
-Depth   = 0
 ```
 
 ## FBMC
@@ -51,7 +46,6 @@ Depth   = 0
 Modules = [DigitalComm]
 Pages   = ["Waveforms/FBMC/fbmcSigGen.jl","Waveforms/FBMC/fbmcSigDecode.jl"]
 Order   = [:function, :type]
-Depth   = 0
 ```
 
 ## OFDM
@@ -60,7 +54,6 @@ Depth   = 0
 Modules = [DigitalComm]
 Pages   = ["Waveforms/OFDM/ofdmSigGen.jl","Waveforms/OFDM/ofdmSigDecode.jl"]
 Order   = [:function, :type]
-Depth   = 0
 ```
 
 ## SC-FDMA
@@ -69,7 +62,6 @@ Depth   = 0
 Modules = [DigitalComm]
 Pages   = ["Waveforms/UFOFDM/ufofdmSigGen.jl","Waveforms/UFOFDM/ufofdmSigDecode.jl"]
 Order   = [:function, :type]
-Depth   = 0
 ```
 
 ## UF-OFDM
@@ -78,7 +70,6 @@ Depth   = 0
 Modules = [DigitalComm]
 Pages   = ["Waveforms/filterUFOFDM.jl","Waveforms/SCFDMA/scfdmaSigGen.jl","Waveforms/SCFDMA/scfdmaSigDecode.jl"]
 Order   = [:function, :type]
-Depth   = 0
 ```
 
 ## WOLA
@@ -87,5 +78,4 @@ Depth   = 0
 Modules = [DigitalComm]
 Pages   = ["Waveforms/WOLA/wolaSigGen.jl","Waveforms/WOLA/wolaSigDecode.jl"]
 Order   = [:function, :type]
-Depth   = 0
 ```
