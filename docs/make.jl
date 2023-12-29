@@ -1,7 +1,7 @@
 push!(LOAD_PATH, "../src/")
 using Documenter, DigitalComm
 
-#DocMeta.setdocmeta!(DigitalComm, :DocTestSetup, :(using DigitalComm); recursive=true) # for doc tests
+DocMeta.setdocmeta!(DigitalComm, :DocTestSetup, :(using DigitalComm); recursive=true)
 
 makedocs(
 	modules = [DigitalComm],
@@ -16,6 +16,7 @@ makedocs(
 											"Examples/example_PSD.md",
 										],
 	],
+	doctest  = true,
 );
 
 deploydocs(

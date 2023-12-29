@@ -1,12 +1,13 @@
 # ---------------------------------------------------- 
 # --- Tests  
 # ---------------------------------------------------- 
-import Printf
-import Test
+import Printf, Test
+
+# Run DocTests
+include("test_doctest.jl")
 
 # Binary sequence 
 include("test_genBitSequence.jl");
-
 
 # Bit Mapping 
 include("test_bitMapping.jl");
