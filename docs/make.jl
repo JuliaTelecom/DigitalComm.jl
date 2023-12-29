@@ -1,9 +1,10 @@
 push!(LOAD_PATH, "../src/")
 using Documenter, DigitalComm
 
+#DocMeta.setdocmeta!(DigitalComm, :DocTestSetup, :(using DigitalComm); recursive=true) # for doc tests
 
 makedocs(
-	#modules = [DigitalComm],
+	modules = [DigitalComm],
 	sitename="DigitalComm.jl",
 	format = Documenter.HTML(),
 	pages    = Any[

@@ -18,7 +18,15 @@ Order   = [:function, :type]
 
 ```@autodocs
 Modules = [DigitalComm]
-Pages   = ["Channel/addNoise.jl","Channel/rayleighChan.jl","Channel/getChannel.jl"]
+Pages   = ["Channel/addNoise.jl","Channel/rayleighChan.jl","Channel/getChannel.jl", "Channel/addCFO.jl"]
+Order   = [:function, :type]
+```
+
+## Windows and filters
+
+```@autodocs
+Modules = [DigitalComm]
+Pages   = ["raisedCosine.jl", "UFOFDM/filterUFOFDM.jl", "WOLA/getWolaWindow.jl"]
 Order   = [:function, :type]
 ```
 
