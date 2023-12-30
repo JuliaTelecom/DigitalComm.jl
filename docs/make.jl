@@ -1,9 +1,6 @@
 push!(LOAD_PATH, "../src/")
 
-using Documenter
-
-include("../src/DigitalComm.jl")	# Ensures that the docs is built using the latest version of the package
-using .DigitalComm
+using Documenter, DigitalComm
 
 DocMeta.setdocmeta!(DigitalComm, :DocTestSetup, :(using DigitalComm); recursive=true)
 
