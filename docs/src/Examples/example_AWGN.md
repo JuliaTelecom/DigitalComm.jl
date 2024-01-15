@@ -27,7 +27,7 @@ qamSeq    = bitMappingQAM(mcs,bitSeq); nothing
 qamNoise,  = addNoise(qamSeq,snr,1); nothing
 ```
 
-## Recevicer
+## Receiver
 
 ```@example AWG
 # --- Binary demapper
