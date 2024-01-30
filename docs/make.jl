@@ -1,6 +1,19 @@
 push!(LOAD_PATH, "../src/")
 
-using Documenter, DigitalComm
+using Documenter
+
+# Running `julia --project docs/make.jl` can be very slow locally.
+# To speed it up during development, one can use make_local.jl instead.
+# The code below checks whether it's being called from make_local.jl or not.
+const LOCAL = get(ENV, "LOCAL", "false") == "true"
+
+if LOCAL
+    include("../src/DigitalComm.jl")
+    using .DigitalComm
+else
+    using DigitalComm
+    ENV["GKSwstype"] = "100"	# Prevents warnings in the doc build on github actions.
+end
 
 DocMeta.setdocmeta!(DigitalComm, :DocTestSetup, :(using DigitalComm); recursive=true)
 

@@ -1,8 +1,18 @@
+# Function overview
+
 ## Common functions
 
 ```@autodocs
 Modules = [DigitalComm]
 Pages   = ["DigitalComm.jl"]
+Order   = [:function, :type]
+```
+
+## NRZI Encoding
+
+```@autodocs
+Modules = [DigitalComm]
+Pages   = ["NRZI.jl"]
 Order   = [:function, :type]
 ```
 
