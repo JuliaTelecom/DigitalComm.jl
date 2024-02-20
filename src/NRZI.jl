@@ -33,21 +33,23 @@ julia> transpose(encoded_bits)
  0  1  0  0  0  1
 ```
 """
-function encodeNRZI(bits::AbstractVector, transitions::Symbol=:low)::AbstractVector
-    encoded_bits = eltype(bits)[]
+function encodeNRZI(bits::AbstractVector, transitions::Symbol=:low)::AbstractVector    
+    encoded_bits = similar(bits)
+    encodeNRZI!(encoded_bits,bits,transitions)
+    return encoded_bits
+end
 
+function encodeNRZI!(encoded_bits::AbstractVector,bits::AbstractVector,transitions::Symbol=:low)
+    @assert size(encoded_bits) == size(bits) "With NRZI encoding, input and output should have same size ($(size(encoded_bits)) ≂̸ $(size(bits))"
     last_bit = 0
-
     transition_bit = (transitions == :high) ? 1 : 0
-
-    for bit in bits
-        if bit == transition_bit
+    for n ∈ eachindex(bits)
+        if bits[n] == transition_bit
             last_bit =  last_bit ⊻ 1
         end
-        push!(encoded_bits, last_bit)
+        encoded_bits[n] = last_bit
     end
-
-    return encoded_bits
+    return nothing
 end
 
 """
@@ -87,20 +89,25 @@ julia> transpose(decoded_bits)
 ```
 """
 function decodeNRZI(encoded_bits::AbstractVector, transitions::Symbol=:low)::AbstractVector
-    decoded_bits = eltype(encoded_bits)[]
+    decoded_bits = similar(encoded_bits)
+    decodeNRZI!(decoded_bits,encoded_bits,transitions)
+    return decoded_bits
+end
+
+
+function decodeNRZI!(decoded_bits::AbstractVector,encoded_bits::AbstractVector, transitions::Symbol=:low)
+    @assert size(encoded_bits) == size(decoded_bits) "With NRZI encoding, input and output should have same size ($(size(decoded_bits)) ≂̸ $(size(encoded_bits))"
     last_bit = 0
-
     transition_bit = (transitions == :high) ? 1 : 0
-
-    for current_bit in encoded_bits
+    for n ∈ eachindex(encoded_bits)
+        current_bit = encoded_bits[n]
         if current_bit != last_bit
             decoded_bit = transition_bit
         else
             decoded_bit = 1 - transition_bit
         end
-        push!(decoded_bits, decoded_bit)
         last_bit = current_bit
+        decoded_bits[n] = decoded_bit
     end
-
-    return decoded_bits
+    return nothing
 end
