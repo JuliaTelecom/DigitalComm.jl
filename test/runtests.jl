@@ -17,7 +17,7 @@ include("test_bitDemapping.jl");
 include("test_hardConstellation.jl");
 
 # NRZI Mapping 
-include("test_NRZI.jl");
+include("test_nrzi.jl");
 
 # Symbol demapper 
 include("test_symbolDemapper.jl");
