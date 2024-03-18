@@ -45,3 +45,10 @@ julia> import Pkg; Pkg.add("DigitalComm")
 ## Documentation
 
 - [**STABLE**](https://juliatelecom.github.io/DigitalComm.jl/dev/index.html) &mdash; **documentation of the most recently tagged version.**
+
+
+
+## Changelog 
+
+
+- v1.2 : Adding NRZ encoding and decoding scheme  
