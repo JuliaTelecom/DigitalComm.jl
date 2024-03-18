@@ -16,6 +16,7 @@ Currently, the package support the following elements
 - Bit manipulation
   - Generation of random binary sequence
   - Conversion between binary sequences and octal sequences
+  - Non Return to Zero Inverted (NRZI) encoding and decoding
 - Modulation // demodulation
   - Quadrature Amplitude Modulation (QAM) with 4-QAM (QPSK), 16-QAM, 64-QAM and 256-QAM.
   - Hard demapper for the x-QAM formats

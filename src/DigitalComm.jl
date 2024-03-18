@@ -27,6 +27,10 @@ export genByteSequence! , genByteSequence;
 include("bitMapping.jl");
 export bitMappingQAM! , bitMappingQAM;
 
+include("NRZI.jl");
+export encodeNRZI , decodeNRZI;
+export encodeNRZI! , decodeNRZI!;
+
 # --- QAM Hard demapper 
 include("bitDeMapping.jl");
 export bitDemappingQAM! ,  bitDemappingQAM;
