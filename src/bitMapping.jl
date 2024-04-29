@@ -3,7 +3,8 @@
 Quadrature Amplitude Modulation (QAM) function
    Apply symbol mapping to a input binary sequence (of size 1xL) with constellation size M.
 	Output is a vector (1xN) with N = L / log2(M)
-	Conventional gray mapping is used. Output constellation is casted in float, with unitary average power
+	Conventional gray mapping is used. Output constellation is casted in float, with unitary average power, 
+	except when `unitaryPower` is set to false.
  Supported constellation
 * QPSK
 * 16-QAM
@@ -12,20 +13,25 @@ Quadrature Amplitude Modulation (QAM) function
 # --- Syntax 
   bitMappingQAM!(qamMat,M,bitSeq)
 # --- Input parameters 
-- qamMat	: Complex Vector to populate of size length(bitSeq) / log2(M) [Array{Complex{Float64}}]
-- M			: Modulation size (i.e from 4 to 256) such as bit per symbol is log2(M) [Int]
-- bitSeq	: Binary sequence to be transformed into QPSK symbols [Array{UInt8}]
+- qamMat        : Complex Vector to populate of size length(bitSeq) / log2(M) [Array{Complex{Float64}}]
+- M	            : Modulation size (i.e from 4 to 256) such as bit per symbol is log2(M) [Int]
+- bitSeq        : Binary sequence to be transformed into QPSK symbols [Array{UInt8}]
+- unitaryPower  : Normalize output power if set to true (default is true).
 # --- Output parameters 
 - []
 """
-function bitMappingQAM!(qamMat,M, bitSeq)
+function bitMappingQAM!(qamMat,M, bitSeq; unitaryPower=true)
 	# ----------------------------------------------------
 	# --- Overall parameters
 	# ----------------------------------------------------
 	# --- Defining scaling factor
-	# Constellation output should have an unitary average power
+	# Constellation output might have an unitary average power
 	# σ^2 = ∑ p(a_i)  ⃒ a_i ⃒ ^2 = 1
-	scalingFactor	= sqrt(2/3*(M-1));
+	if unitaryPower
+		scalingFactor	= sqrt(2/3*(M-1));
+	else
+		scalingFactor   = 1;
+	end
 	nbSymb			= length(qamMat);
 	# ----------------------------------------------------
 	# --- Switch on modulation order
@@ -185,11 +191,11 @@ qamMat =  bitMappingQAM(M,bitSeq)
 # --- Output parameters 
 - qamMat	: Complex Vector to populate of size length(bitSeq) / log2(M) [Array{Complex{Float64}}]
 """
-function bitMappingQAM(M,bitSeq)
+function bitMappingQAM(M,bitSeq; unitaryPower=true)
 	nbBits	= length(bitSeq);
 	nbSymb	= Int( nbBits ÷ log2(M)); 
 	buffer	= zeros(Complex{Float64},nbSymb);
-	bitMappingQAM!(buffer,M,bitSeq);
+	bitMappingQAM!(buffer,M,bitSeq; unitaryPower);
 	return buffer;
 end
 
@@ -199,27 +205,27 @@ end
 # --- Multiple dispatch handling
 # ----------------------------------------------------
 # --- MD: String case for modulation order
-function bitMappingQAM!(qamMat,M::String, bitSeq)
+function bitMappingQAM!(qamMat,M::String, bitSeq; unitaryPower=true)
 	# --- Casting modulation order to int8
 	if M == "QPSK" || M == "4-QAM" || M == "QAM-4" || M=="4QAM" || M == "QAM4"
-		bitMappingQAM!(qamMat,4,bitSeq);
+		bitMappingQAM!(qamMat,4,bitSeq; unitaryPower);
 	elseif M == "16-QAM" || M == "QAM-16" || M=="16QAM" || M == "QAM16"
-		bitMappingQAM!(qamMat,16,bitSeq);
+		bitMappingQAM!(qamMat,16,bitSeq; unitaryPower);
 	elseif M == "64-QAM" || M == "QAM-64" || M=="64QAM" || M == "QAM64"
-		bitMappingQAM!(qamMat,64,bitSeq);
+		bitMappingQAM!(qamMat,64,bitSeq; unitaryPower);
 	elseif M == "256-QAM" || M == "QAM-256" || M=="256QAM" || M == "QAM256"
-		bitMappingQAM!(qamMat,256,bitSeq);
+		bitMappingQAM!(qamMat,256,bitSeq; unitaryPower);
 	end
 end
-function bitMappingQAM(M::String, bitSeq)
+function bitMappingQAM(M::String, bitSeq; unitaryPower=true)
 	# --- Casting modulation order to int8
 	if M == "QPSK" || M == "4-QAM" || M == "QAM-4" || M=="4QAM" || M == "QAM4"
-		bitMappingQAM(4,bitSeq);
+		bitMappingQAM(4,bitSeq; unitaryPower);
 	elseif M == "16-QAM" || M == "QAM-16" || M=="16QAM" || M == "QAM16"
-		bitMappingQAM(16,bitSeq);
+		bitMappingQAM(16,bitSeq; unitaryPower);
 	elseif M == "64-QAM" || M == "QAM-64" || M=="64QAM" || M == "QAM64"
-		bitMappingQAM(64,bitSeq);
+		bitMappingQAM(64,bitSeq; unitaryPower);
 	elseif M == "256-QAM" || M == "QAM-256" || M=="256QAM" || M == "QAM256"
-		bitMappingQAM(256,bitSeq);
+		bitMappingQAM(256,bitSeq; unitaryPower);
 	end
 end
