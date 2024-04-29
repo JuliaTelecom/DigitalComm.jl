@@ -26,6 +26,7 @@ println("Tests for symbol mapper with QAM sequences");
 	buff  = [0x01 0x00 0x00 0x00 0x00 0x01 0x01 0x01 ];
 	@show bitMappingQAM(2,buff)
 	@test all(bitMappingQAM(2,buff) .≈ [1; -1; -1; -1; -1; 1; 1; 1]);
+	@test all(bitMappingQAM(2,buff;unitaryPower=false) .≈ [1; -1; -1; -1; -1; 1; 1; 1]);
 end
 
 @testset  "qpsk" begin 
@@ -44,6 +45,7 @@ end
 	# Some manual check due to gray coding 
 	buff  = [0x01 0x00 0x00 0x00 0x00 0x01 0x01 0x01 ];
 	@test all(bitMappingQAM(4,buff) .≈ 1/sqrt(2)*[1-1im; -1-1im; -1+1im; 1+1im]); 
+	@test all(bitMappingQAM(4,buff;unitaryPower=false) .== [1-1im; -1-1im; -1+1im; 1+1im]); 
 end
 
 
@@ -62,6 +64,7 @@ end
 	# Some manual check due to gray coding 
 	buff  = [0x01 0x00 0x00 0x00 0x00 0x01 0x01 0x01 ];
 	@test all(bitMappingQAM(mcs,buff) .≈ 1/sqrt(10)*[-3+3im;1-1im]);
+	@test all(bitMappingQAM(mcs,buff;unitaryPower=false) .== [-3+3im;1-1im]);
 end
 
 
@@ -80,6 +83,7 @@ end
 	# Some manual check due to gray coding 
 	buff  = [0x01 0x00 0x00 0x00 0x00 0x01 0x01 0x01 0x01 0x00 0x01 0x00];
 	@test all(bitMappingQAM(mcs,buff) .≈ 1/sqrt(42)*[-7+5im;-3-7im]);
+	@test all(bitMappingQAM(mcs,buff;unitaryPower=false) .== [-7+5im;-3-7im]);
 end
 
 
@@ -100,4 +104,5 @@ end
 	# Some manual check due to gray coding 
 	buff  = [0x01 0x00 0x00 0x00 0x00 0x01 0x01 0x01 0x01 0x00 0x01 0x00 0x01 0x01 0x00 0x00];
 	@test all(bitMappingQAM(mcs,buff) .≈ 1/sqrt(170)*[3-5im;9-7im]);
+	@test all(bitMappingQAM(mcs,buff,unitaryPower=false) .== [3-5im;9-7im]);
 end
