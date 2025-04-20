@@ -29,7 +29,9 @@ end
 function genSig(qamMat,struc::StrucFBMC)
 	return fbmcSigGen(qamMat,struc);
 end
-
+function genSig(qamMat,cdma::StrucCDMA)
+    return cdmaSigGen(qamMat,cdma)
+end 
 
 """ 
 
@@ -62,7 +64,9 @@ end
 function decodeSig(signal,struc::StrucFBMC)
 	return fbmcSigDecode(signal,struc);
 end
-
+function decodeSig(signal,struc::StrucCDMA)
+    return cdmaSigDecode(signal,struc)
+end
 
 """ 
 ---  
@@ -89,6 +93,8 @@ function getWaveformName(s::Waveform)
 		name = "FBMC";
 	elseif typeof(s) == StrucBFOFDM 
 		name = "BFOFDM";
+    elseif typeof(s) == StrucCDMA
+        name = "CDMA"
 	end
 end
 
