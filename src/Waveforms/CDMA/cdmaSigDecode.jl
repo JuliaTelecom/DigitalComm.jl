@@ -7,6 +7,10 @@ function cdmaSigDecode(sig::AbstractVector{T},nbUsers,code::Symbol,userMask=noth
     # --- Define code 
     if code == :ovsf
         c = ovsf(nbUsers)
+    elseif code == :gold
+        nReg = Int(log2(nbUsers + 1))
+        @assert 2^nReg - 1 == nbUsers "Gold code size should be of form 2^n - 1 (got nbUsers=$nbUsers)"
+        c = gold(nReg)
     else 
         @error "Code $code is not supported"
     end

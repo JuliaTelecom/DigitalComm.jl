@@ -226,6 +226,8 @@ export oqamDemapping
 export fbmcSigDecode
 
 # CDMA Generation 
+include("./Waveforms/CDMA/goldCode.jl")
+export gold
 include("./Waveforms/CDMA/cdmaSigGen.jl")
 export initCDMA
 export ovsf 

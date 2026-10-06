@@ -5,7 +5,7 @@ struct StrucCDMA <: Waveform
 end
 
 
-""" Instantiate a CDMA structure with a code of size `nbUsers`of type `code`(e.g :ovsf) and active for the user defined in `userMask`
+""" Instantiate a CDMA structure with a code of size `nbUsers`of type `code`(e.g :ovsf or :gold) and active for the user defined in `userMask`
 """
 function initCDMA(nbUsers::Number,code::Symbol,userMask::Union{Nothing,AbstractVector}=nothing)
     isnothing(userMask) && (userMask=1:nbUsers) 
@@ -50,7 +50,7 @@ cdmaSigGen(qamMat::AbstractMatrix{T},nbUsers::Number,code::Symbol,userMask=nothi
 Input parameters 
 - qamMat : Matrix of symbols of size nbActiveUser x nbSymb. Each line corresponds to a user stream and there is at least nbActiveUser colunm. nbActiveUser should be ≤ than the number of code we have 
 - nbUsers : Maximal number of user that can be multiplexed. Used for code generation 
-- code : Type of code used as a Symbol. We support `:ovsf`
+- code : Type of code used as a Symbol. We support `:ovsf` and `:gold` (the latter needs `nbUsers = 2^n - 1` for some integer `n`)
 - userMask: Optional parameter, a vector of the code used. Should be of size nbActiveUser. For example, if we have 16 max users but we only want to encode 1000 symbols for  user 2 and user 12, we should call `cdmaSigGen` with a matrix `qamMat` of size (1000,2), `nbUsers` = 16 and `userMask` = [2;12]
 """
 function cdmaSigGen!(sigOut::AbstractVector,qamMat::AbstractMatrix{T},nbUsers::Number,code::Symbol,userMask=nothing) where T
@@ -60,8 +60,13 @@ function cdmaSigGen!(sigOut::AbstractVector,qamMat::AbstractMatrix{T},nbUsers::N
     if code == :ovsf
         # --- Generate the code base 
         c = ovsf(nbUsers)
+    elseif code == :gold
+        # --- Gold codes: code count == code length == nbUsers == 2^nReg - 1
+        nReg = Int(log2(nbUsers + 1))
+        @assert 2^nReg - 1 == nbUsers "Gold code size should be of form 2^n - 1 (got nbUsers=$nbUsers)"
+        c = gold(nReg)
     else 
-        @error "Code $code is unsupported. We currently inly support OVSF"
+        @error "Code $code is unsupported. We currently only support OVSF and Gold (:ovsf, :gold)"
     end
     nbActiveUser = size(qamMat,1)
     nbSymb       = size(qamMat,2)

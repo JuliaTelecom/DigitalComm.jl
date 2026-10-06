@@ -204,6 +204,61 @@ end
 end
 
 
+@testset "Gold code generator" begin
+    for n = [5,6,7]
+        N = 2^n - 1
+        C = gold(n)
+        @test size(C) == (N,N)
+        @test all(abs.(C) .== 1) # bipolar codes, no zero entries
+        # --- Autocorrelation: peak at zero shift should equal N (perfect match)
+        for cn ∈ 1 : N
+            @test sum(C[:,cn] .* C[:,cn]) == N
+        end
+        # --- Correlation under cyclic shift stays inside the Gold bound
+        # {-1, -t(n), t(n)-2} ∪ {N} -- unlike OVSF, Gold codes are NOT
+        # perfectly orthogonal, so we check boundedness rather than exact
+        # zero. Exhaustive for n=5 (cheap); randomly sampled for n=6,7 to
+        # keep runtime reasonable (full search is O(N^4)).
+        t     = 2^(div(n+2,2)) + 1
+        bound = Set([-1, -t, t-2, N])
+        pairs = n == 5 ? [(cn,ck,s) for cn in 1:N, ck in 1:N, s in 0:N-1] :
+                          [(rand(1:N),rand(1:N),rand(0:N-1)) for _ in 1:2000]
+        for (cn,ck,s) in pairs
+            γ = sum(C[:,cn] .* circshift(C[:,ck],s))
+            @test γ ∈ bound
+        end
+    end
+    # --- Unsupported register length without explicit taps should error
+    @test_throws ErrorException gold(4)
+end
+
+@testset "CDMA generator with Gold codes" begin
+    n  = 5
+    N  = 2^n - 1   # 31
+    C  = gold(n)
+    nS = 50
+    # --- Single active user (DSSS: one user, one spreading code)
+    qamMat = ones(1,nS)
+    sigId  = cdmaSigGen(qamMat,N,:gold,[3])
+    @test sigId isa Vector
+    @test length(sigId) == nS * N
+    for k = 1 : 1 : N
+        @test sigId[k] == C[k,3]
+    end
+    # --- Full multi-user load, noiseless synchronous channel: every user's
+    # bits should be recovered exactly, same as with :ovsf
+    qamMat = Float64.(rand((-1,1),N,nS))
+    sigId  = cdmaSigGen(qamMat,N,:gold)
+    qamRx  = cdmaSigDecode(sigId,N,:gold,1:N)
+    @test all(sign.(qamRx) .≈ qamMat)
+    # --- Dispatch through the StrucCDMA / genSig / decodeSig path
+    cdma  = initCDMA(N,:gold)
+    sigId2 = genSig(qamMat,cdma)
+    @test all(sigId2 .== sigId)
+    qamDec = decodeSig(sigId2,cdma)
+    @test all(sign.(qamDec) .≈ qamMat)
+end
+
 @testset "CDMA through genSig/decodeSig" begin
     nbSymb = 14
     nbUsers = 16
